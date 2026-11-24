@@ -1,0 +1,61 @@
+import { useEffect, useRef, useState } from "react";
+import families from "../data/families.json";
+import { usePageMeta } from "../lib/usePageMeta";
+
+export default function HappyFamilies() {
+  usePageMeta("Happy families | TeddyPups U.A.E.", "Beautiful moments shared by clients after welcoming their furry friends.");
+  const [open, setOpen] = useState<number | null>(null);
+  const dlg = useRef<HTMLDialogElement>(null);
+  const imgs = families.all;
+
+  useEffect(() => {
+    const d = dlg.current;
+    if (!d) return;
+    if (open !== null && !d.open) d.showModal();
+    if (open === null && d.open) d.close();
+  }, [open]);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (open === null) return;
+      if (e.key === "ArrowRight") setOpen((open + 1) % imgs.length);
+      if (e.key === "ArrowLeft") setOpen((open - 1 + imgs.length) % imgs.length);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, imgs.length]);
+
+  return (
+    <div className="page page--dusk">
+      <section className="page-hero gutter">
+        <h1 className="page-title">Happy families</h1>
+        <p className="page-lede">Nothing makes us happier than seeing our puppies in loving homes! Here are some beautiful moments shared by our amazing clients after welcoming their furry friends.</p>
+        <p className="hand-kicker">{imgs.length} moments and counting</p>
+        <blockquote className="tp-quote">
+          “TeddyPups truly made our dream a reality. They supported us at every step of the import journey. Our Maltipoo arrived healthy, cheerful, and absolutely perfect. Having 24/7 support throughout the process gave us complete peace of mind.”
+          <cite>Sarah M., Dubai, UAE</cite>
+        </blockquote>
+      </section>
+      <section className="gutter">
+        <ul className="tp-wall">
+          {imgs.map((src, i) => (
+            <li key={src}>
+              <button type="button" onClick={() => setOpen(i)} aria-label={`Open photo ${i + 1}`}>
+                <img src={src} alt="A happy TeddyPups family with their new puppy" loading="lazy" decoding="async" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <dialog ref={dlg} className="tp-lightbox" aria-label="Photo viewer" data-lenis-prevent="true" onClose={() => setOpen(null)} onClick={(e) => e.target === dlg.current && setOpen(null)}>
+        {open !== null && (
+          <>
+            <img src={imgs[open]} alt="A happy TeddyPups family with their new puppy" />
+            <button className="tp-lightbox__close" onClick={() => setOpen(null)} aria-label="Close">✕</button>
+            <button className="tp-lightbox__prev" onClick={() => setOpen((open - 1 + imgs.length) % imgs.length)} aria-label="Previous photo">‹</button>
+            <button className="tp-lightbox__next" onClick={() => setOpen((open + 1) % imgs.length)} aria-label="Next photo">›</button>
+          </>
+        )}
+      </dialog>
+    </div>
+  );
+}

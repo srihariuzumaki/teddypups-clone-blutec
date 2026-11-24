@@ -1,0 +1,52 @@
+import { Link, useSearchParams } from "react-router-dom";
+import PuppyCard from "../components/ui/PuppyCard";
+import { BREEDS, available, gone } from "../data/puppies";
+import { usePageMeta } from "../lib/usePageMeta";
+
+export default function Puppies() {
+  usePageMeta("Available puppies | TeddyPups U.A.E.", "Browse the teacup and teddy bear puppies currently available in Dubai or imported for you.");
+  const [params, setParams] = useSearchParams();
+  const breed = params.get("breed");
+  const origin = params.get("origin");
+  const list = available.filter((p) => (!breed || p.breedKey === breed) && (!origin || p.origin === origin));
+  const set = (k: string, v: string | null) => {
+    const n = new URLSearchParams(params);
+    v ? n.set(k, v) : n.delete(k);
+    setParams(n, { replace: true });
+  };
+
+  return (
+    <div className="page page--warm">
+      <section className="page-hero gutter">
+        <p className="hand-kicker">self-portrait</p>
+        <h1 className="page-title">Available puppies</h1>
+        <p className="page-lede">Every listing shows real photos of the actual puppy. Open a profile to see them all, then ask us about them on WhatsApp.</p>
+        <div className="tp-chips" role="group" aria-label="Filter puppies">
+          <button type="button" className="tp-chip" aria-pressed={!breed && !origin} onClick={() => setParams({}, { replace: true })}>All</button>
+          {BREEDS.map((b) => (
+            <button key={b.key} type="button" className="tp-chip" aria-pressed={breed === b.key} onClick={() => set("breed", breed === b.key ? null : b.key)}>{b.label}</button>
+          ))}
+          <span className="tp-chips__sep" aria-hidden="true" />
+          <button type="button" className="tp-chip" aria-pressed={origin === "local"} onClick={() => set("origin", origin === "local" ? null : "local")}>In Dubai</button>
+          <button type="button" className="tp-chip" aria-pressed={origin === "imported"} onClick={() => set("origin", origin === "imported" ? null : "imported")}>Imported</button>
+        </div>
+      </section>
+      <section className="gutter">
+        {list.length ? (
+          <ul className="tp-grid" aria-label="Available puppies">
+            {list.map((p, i) => <PuppyCard key={p.slug} p={p} i={i} />)}
+          </ul>
+        ) : (
+          <p className="tp-empty">No puppies match that filter right now. <button className="link-ink" onClick={() => setParams({}, { replace: true })}>Show everyone</button></p>
+        )}
+      </section>
+      <section className="gutter tp-gonestrip">
+        <h2 className="section-title">Already gone home</h2>
+        <p className="page-lede">These puppies have found their families. <Link className="link-ink" to="/gone-home">See the puppies who've gone home</Link></p>
+        <ul className="tp-grid tp-grid--small">
+          {gone.slice(0, 5).map((p, i) => <PuppyCard key={p.slug} p={p} i={i} />)}
+        </ul>
+      </section>
+    </div>
+  );
+}

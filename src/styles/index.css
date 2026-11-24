@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@import "./original/theme.css";
+@import "./original/base.css";
+@import "./original/components.css";
+@import "./original/tp.css";
+
+/* next/font variables the reference sets on <html> */
+:root {
+  --font-fraunces: "Fraunces Variable", "Fraunces", Georgia, serif;
+  --font-figtree: "Figtree Variable", "Figtree", system-ui, sans-serif;
+  --font-shantell: "Shantell Sans Variable", "Shantell Sans", ui-rounded, "Comic Sans MS", cursive;
+}
+
+/* Custom utilities defined by the reference */
+@utility font-plush {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+  line-height: 0.92;
+}
+@utility font-scrawl {
+  font-family: var(--font-hand);
+  font-variation-settings: "INFM" 60, "BNCE" 30;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+@utility font-plush-text {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 100, "WONK" 0, "opsz" 36;
+}
+@utility text-big { font-size: clamp(2rem, 4.2vw, 4rem); }
+@utility text-huge { font-size: clamp(2.6rem, 6.4vw, 6.25rem); }
+
+@utility gutter {
+  padding-inline: var(--gutter);
+}
+
+@utility text-lede {
+  font-size: clamp(1.125rem, 1.4vw, 1.375rem);
+  line-height: 1.5;
+}
+
+@utility text-giant {
+  font-size: clamp(3.1rem, 9.4vw, 9.75rem);
+}
+
+@utility measure {
+  max-width: 62ch;
+}

@@ -1,0 +1,136 @@
+How it works | TeddyPups U.A.E. 
+
+every puppy is family [Skip to content ](#main)
+
+[ ![](/brand/logo.png) TeddyPups ]()
+[Home ]()
+[Puppies ]()
+[Happy families ]()
+[How it works ]()
+[FAQ ]()
+[Visit & contact ]()
+[WhatsApp us ](WA_LINK) [BTN:Menu ] 
+
+where to, friend?  [BTN:Close ] 
+[Home ]()
+[Puppies ]()
+[Happy families ]()
+[How it works ]()
+[FAQ ]()
+[Visit & contact ]()
+[WhatsApp us ](WA_LINK)
++971 50 000 0000 
+
+# How it works 
+Whether you choose to visit us locally or order a premium breed from overseas, TeddyPups is here to make the experience unforgettable. [1 Two ways home ]()[2 Our premium puppy promise ]()[3 Delivery & collection ]()[4 Why choose us ]()
+
+choose your way 
+
+## Two ways home 
+
+ [BTN:In Dubai meet in person ]  [BTN:Imported order upon request ] 
+
+### Meet your puppy in person 
+Step into our Downtown Dubai showroom and experience the joy of choosing your puppy face-to-face. We source healthy, well-socialized puppies from trusted local breeders, ensuring they're raised with care, proper nutrition, and veterinary checks. 
+Downtown Dubai 
+Step 1 
+
+#### Explore our puppies 
+Browse our website to view the available puppies. Each listing includes photos, breed details, age, and health information. 
+Step 2 
+
+#### Choose your puppy 
+Once you find a puppy you love, open their profile for more information or to enquire further. You can also reach out to us directly if you have any questions. 
+Step 3 
+
+#### Meet before you choose 
+Spend time bonding before making your decision. 
+Step 4 
+
+#### Pick-up or delivery 
+Pick up your puppy from us or have them delivered to your home within Dubai. Our delivery service is safe and reliable, ensuring your puppy arrives comfortably. 
+
+### Order upon request 
+Looking for a truly exceptional companion? Our Order Upon Request service gives you access to some of the world's most sought-after teacup breeds — ethically sourced from the most reputable, certified breeders across Europe, Korea, and beyond. 
+From Korean teacup poodles to rare Maltese, Pom, and Yorkie lines, we bring the world's finest puppies to Dubai, just for you. 
+Europe · Korea Dubai 
+Step 1 
+
+#### Reserve your puppy 
+Browse our selection of available breeds and place a reservation for the teacup puppy that captures your heart. Our reservation-only model ensures that each puppy is specifically sourced to meet your preferences. 
+Step 2 
+
+#### Personalized consultation 
+Once your reservation is confirmed, we will work closely with you to finalize details and provide updates on your puppy's journey. 
+Step 3 
+
+#### Import and arrival 
+We manage all aspects of the import process, including health checks, travel arrangements, and necessary documentation. Your puppy will be carefully transported and will arrive ready to join your family. 
+Step 4 
+
+#### Welcome home 
+Upon arrival, we provide support to help your new puppy acclimate to their new environment. Our team is available for any additional assistance and to ensure a smooth transition into your home. 
+
+puppy passport 
+
+## Our premium puppy promise 
+Hand-selected breeders 
+We work only with breeders who uphold the highest ethical and health standards. 
+Full transparency 
+Photos, videos, and health certificates are shared before your puppy travels. 
+Safe, stress-free delivery 
+We handle every detail of the import process, so your puppy arrives happy, healthy, and ready to love you. 
+
+## Delivery & collection 
+From a same-day visit in Downtown Dubai to a flight from Korea, every puppy travels comfortably and arrives safely. 
+
+### Take your puppy home the same day 
+Local puppies are available immediately — visit, fall in love, and go home together. 
+
+### Delivery within Dubai 
+Prefer to stay home? We deliver your puppy to your door within Dubai, safely and comfortably. 
+
+### Safe international cargo 
+We handle all the paperwork and ensure comfortable travel so your puppy arrives happy and stress-free. 
+
+### Worldwide delivery 
+We safely deliver puppies to loving homes all around the world. Our trusted international cargo partners ensure your new furry friend travels comfortably and arrives safely, no matter the distance. 
+
+## Why choose us 
+We're here to help you find a new family member. From the moment you visit our site to the joyful day your puppy arrives at your door, we're with you every step of the way. Our mission is to make the entire adoption process smooth, transparent, and full of love. 
+
+### International cargo 
+We safely deliver puppies to loving homes all around the world. Our trusted international cargo partners ensure your new furry friend travels comfortably and arrives safely, no matter the distance. 
+
+### Support 24/7 
+Our team is available 24/7 to answer your questions and assist you through every step of the adoption process. From choosing your puppy to post-delivery support — we're just a message away. 
+
+### Health guarantee 
+All our puppies come with a verified health certificate from licensed vets. We ensure every puppy is vaccinated, dewormed, and thoroughly checked before joining your family. 
+
+## Unique and high quality puppies 
+When you choose TeddyPups, you can trust that you're getting a puppy of the highest quality. We also provide guidance and support to new pet owners, offering advice on training, nutrition, and general care to ensure a smooth transition for you and your new furry friend. 
+[Ask us on WhatsApp ](WA_LINK)[See available puppies ](/puppies)
+
+Home, at last. 
+TeddyPups U.A.E. is a Dubai-based brand specializing in miniature puppies, offering premium services and worldwide shipping. 
+
+## Explore 
+[Available puppies ](/puppies)
+[Gone home ](/gone-home)
+[Happy families ](/happy-families)
+[How it works ](/how-it-works)
+[Delivery & collection ](/how-it-works#delivery)
+[FAQ ](/faq)
+[Visit & contact ](/contact)
+
+## Say hello 
+[WhatsApp +971 50 000 0000 ](WA_LINK)
+[[email protected] ]()
+Downtown Dubai, United Arab Emirates 
+[Instagram ](https://www.instabizweb.com/)
+[TikTok ](https://www.instabizweb.com/)
+[Facebook ](https://www.instabizweb.com/)
+ ![](/brand/logo.png) © 2026 TeddyPups U.A.E. every puppy is family 
+
+[WhatsApp us ](WA_LINK)[Call ](tel:+971500000000)

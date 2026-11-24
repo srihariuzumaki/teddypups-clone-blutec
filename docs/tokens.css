@@ -1,0 +1,89 @@
+/* Design tokens for the TeddyPups clone — see THEME.md. Import once in main.tsx. */
+:root {
+  /* colour */
+  --color-toffee: #c2622b;
+  --color-toffee-deep: #a24a1a;
+  --color-toffee-ink: #8e3f15;
+  --color-honey: #f2be6b;
+  --color-honey-soft: #fbe3b4;
+  --color-cocoa: #2a170e;
+  --color-cocoa-soft: #5a3a28;
+  --color-milk: #fffdf8;
+  --color-sky: #bfddf5;
+  --color-sky-deep: #2f6e9e;
+  --color-blush: #f9cdbf;
+  --color-wa: #1f7a4d;
+  --color-wa-ink: #1f5d3a;
+  --color-wa-tint: #e3f4e8;
+  --color-error: #b3261e;
+  --color-error-ink: #8a1c14;
+  --color-error-tint: #fde7e5;
+  --color-night: #24130b;
+  --color-paper: #fffcf3;
+  --color-paper-2: #fff5e2;
+
+  /* type */
+  --font-display: "Fraunces Variable", "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Figtree Variable", "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-hand: "Shantell Sans Variable", "Shantell Sans", ui-rounded, "Comic Sans MS", cursive;
+
+  /* radius */
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+
+  /* easing */
+  --ease-pounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snap: cubic-bezier(0.7, 0, 0.2, 1);
+
+  /* layout */
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --header-h: 4.75rem;
+  --bar-h: 0px;
+  color-scheme: light;
+  accent-color: var(--color-toffee-deep);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --header-h: 4rem;
+    --bar-h: calc(4rem + env(safe-area-inset-bottom));
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--color-milk);
+  color: var(--color-cocoa);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; margin: 0; }
+.gutter { padding-inline: var(--gutter); }
+
+/* home scenes: sky gradients */
+.tp-scene { --ink: var(--color-cocoa); --ink-soft: var(--color-cocoa-soft); color: var(--ink);
+  background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom)); position: relative; }
+.tp-scene[data-tone="dark"] { --ink: var(--color-milk);
+  --ink-soft: color-mix(in oklab, var(--color-milk) 80%, transparent); }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  min-height: 3.25rem; padding: 0.85rem 1.6rem; border-radius: 999px; font-size: 1.0625rem;
+  font-weight: 650; line-height: 1.1; text-decoration: none;
+  transition: transform 0.35s var(--ease-pounce), background-color 0.25s ease, box-shadow 0.35s var(--ease-silk); }
+.btn:active { transform: scale(0.96); }
+.btn-primary { background: var(--color-toffee-deep); color: var(--color-milk); box-shadow: 0 0.5rem 0 -0.15rem var(--color-cocoa); }
+.btn-primary:hover { box-shadow: 0 0.7rem 0 -0.15rem var(--color-cocoa); transform: translateY(-2px) rotate(-1deg); }
+.btn-ghost { color: var(--color-cocoa); border: 2px solid var(--color-cocoa); background: transparent; }
+.btn-ghost:hover { background: var(--color-cocoa); color: var(--color-milk); }
+.tp-scene[data-tone="dark"] .btn-ghost { border-color: var(--color-milk); color: var(--color-milk); }
+.btn-whatsapp { background: var(--color-wa); color: #fff; box-shadow: 0 0.5rem 0 -0.15rem var(--color-cocoa); }
+.btn-whatsapp:hover { transform: translateY(-2px) rotate(1deg); }
+.link-ink { color: var(--color-toffee-ink); text-underline-offset: 0.2em;
+  text-decoration: underline color-mix(in oklab, var(--color-toffee) 55%, transparent); text-decoration-thickness: 2px; }

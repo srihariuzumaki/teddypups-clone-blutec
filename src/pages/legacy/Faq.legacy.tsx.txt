@@ -1,0 +1,55 @@
+import { useMemo, useState } from "react";
+import { FAQ } from "../data/faq";
+import { WA_LINK } from "../data/site";
+import { usePageMeta } from "../lib/usePageMeta";
+
+const PINS = ["#c2622b", "#2f6e9e", "#e0a62c", "#c9506b"];
+
+export default function Faq() {
+  usePageMeta("FAQ | TeddyPups U.A.E.", "Answers about health checks, importing, delivery and visiting our Dubai showroom.");
+  const [q, setQ] = useState("");
+  const [open, setOpen] = useState<number | null>(null);
+  const items = useMemo(() => {
+    const s = q.trim().toLowerCase();
+    return FAQ.map((f, i) => ({ ...f, i })).filter((f) => !s || (f.q + f.a).toLowerCase().includes(s));
+  }, [q]);
+
+  return (
+    <div className="page page--night">
+      <section className="page-hero gutter">
+        <h1 className="page-title page-title--xl">Questions &amp; answers</h1>
+        <p className="page-lede">Can't find what you're looking for? Message us on WhatsApp — our team is available 24/7.</p>
+      </section>
+      <section className="gutter tp-faqroom">
+        <aside className="tp-faqside">
+          <p className="hand-kicker">sniff out a question</p>
+          <label className="tp-search">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" strokeWidth="2.4" /><path d="m15 15 5 5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" /></svg>
+            <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="delivery, Korea, vaccinated…" aria-label="Search questions" />
+          </label>
+          <p className="tp-faqside__count" aria-live="polite">{items.length} {items.length === 1 ? "note" : "notes"} on the board</p>
+          <a className="btn btn-whatsapp" href={WA_LINK} target="_blank" rel="noreferrer">Ask your own question</a>
+        </aside>
+        <div className="tp-board">
+          {items.length === 0 && <p className="tp-note tp-note--empty">Nothing pinned up for that yet — ask us on WhatsApp!</p>}
+          <ul>
+            {items.map((f, n) => {
+              const isOpen = open === f.i;
+              return (
+                <li key={f.i} className="tp-note" data-open={isOpen} style={{ ["--pin" as string]: PINS[n % 4], ["--tilt" as string]: `${n % 2 ? 0.8 : -0.8}deg` }}>
+                  <span className="tp-note__pin" aria-hidden="true" />
+                  <h2>
+                    <button type="button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : f.i)}>
+                      {f.q}<span className="tp-note__chevron" aria-hidden="true">⌄</span>
+                    </button>
+                  </h2>
+                  <div className="tp-note__answer" hidden={!isOpen}><p>{f.a}</p></div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+    </div>
+  );
+}

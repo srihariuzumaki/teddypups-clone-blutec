@@ -1,0 +1,36 @@
+import { Link } from "react-router-dom";
+import Reveal from "../components/ui/Reveal";
+import { gone } from "../data/puppies";
+import { usePageMeta } from "../lib/usePageMeta";
+
+export default function GoneHome() {
+  usePageMeta("Gone home | TeddyPups U.A.E.", "Every puppy here has already joined a loving family.");
+  return (
+    <div className="page page--warm">
+      <section className="page-hero gutter">
+        <h1 className="page-title">Gone home</h1>
+        <p className="page-lede">Every puppy here has already joined a loving family. Looking for one just like them? Tell us — we'll help you find your match.</p>
+        <Link className="btn btn-primary" to="/puppies">See available puppies</Link>
+        <p className="hand-kicker" style={{ marginTop: "2.5rem" }}>tickets home</p>
+      </section>
+      <section className="gutter">
+        <ul className="tp-tickets">
+          {gone.map((p, i) => (
+            <Reveal as="li" key={p.slug} className="tp-ticket" delay={(i % 5) * 70} tilt={((i * 53) % 40) / 10 - 2}>
+              <Link to={`/puppies/${p.slug}`} className="tp-ticket__link">
+                <img src={p.image} alt={`${p.name}, ${p.sex} ${p.breed} puppy`} loading="lazy" decoding="async" />
+                <span className="tp-ticket__body">
+                  <small>one ticket home</small>
+                  <strong>{p.name}</strong>
+                  <span>{p.isNamed ? `${p.breed}, ${p.sex}` : p.sex}</span>
+                  <em>{p.homeAt} home ♥</em>
+                  <small className="tp-ticket__admit">admit one</small>
+                </span>
+              </Link>
+            </Reveal>
+          ))}
+        </ul>
+      </section>
+    </div>
+  );
+}

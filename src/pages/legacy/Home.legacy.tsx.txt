@@ -1,0 +1,178 @@
+import { Link } from "react-router-dom";
+import Reveal from "../components/ui/Reveal";
+import families from "../data/families.json";
+import { FAQ } from "../data/faq";
+import { available, BREEDS } from "../data/puppies";
+import { WA_LINK } from "../data/site";
+import { usePageMeta } from "../lib/usePageMeta";
+
+const HERO = available.slice(0, 6);
+const HEIGHTS = [8.5, 13, 9.5, 14, 12, 8];
+
+const TRUST = [
+  ["Vet-checked & healthy", "Every puppy comes vaccinated, dewormed, and with a verified health certificate."],
+  ["Korea to Dubai, safely", "Trusted breeders, safe travel, and premium care from start to finish."],
+  ["Support 24/7", "Always here to help, from choosing your puppy to post-delivery support."],
+  ["Trusted by families worldwide", "Puppies delivered to loving homes all around the world."],
+];
+const STEPS = [
+  ["Choose your breed", "Select your preferred breed or tell us what you're looking for. We'll guide you based on availability and your lifestyle."],
+  ["Get photos & details", "Our team will share real photos, health details, and all necessary information directly on WhatsApp."],
+  ["Secure & safe delivery", "Once confirmed, we handle everything professionally and ensure your puppy reaches you safely and stress-free."],
+];
+
+export default function Home() {
+  usePageMeta();
+  return (
+    <>
+      {/* 1 — hero */}
+      <section className="tp-scene tp-hero" data-tone="light" style={{ ["--sky-top" as string]: "#fffdf8", ["--sky-bottom" as string]: "#fff1d8" }} aria-labelledby="hero-title">
+        <div className="tp-hero__sun" aria-hidden="true" />
+        <div className="tp-hero__copy gutter">
+          <p className="hand-kicker tp-hero__kicker">every puppy is family</p>
+          <h1 id="hero-title" className="tp-hero__title">Premium teacup puppies in Dubai</h1>
+          <p className="tp-hero__lede">Meet your new best friend in our Dubai showroom, or order a rare miniature breed from trusted breeders worldwide.</p>
+          <div className="tp-hero__actions">
+            <Link className="btn btn-primary" to="/puppies">View available puppies</Link>
+            <a className="btn btn-ghost" href={WA_LINK} target="_blank" rel="noreferrer">Enquire on WhatsApp</a>
+          </div>
+        </div>
+        <ul className="tp-lineup" aria-label="Meet some of our puppies">
+          {HERO.map((p, i) => (
+            <li key={p.slug} className="tp-lineup__seat" style={{ ["--h" as string]: `${HEIGHTS[i]}rem` }}>
+              <Link to={`/puppies/${p.slug}`} className="tp-lineup__pup" aria-label={`Meet ${p.name}, ${p.breed}`}>
+                <img src={p.image} alt={`${p.name}, ${p.sex} ${p.breed} puppy`} loading={i < 3 ? "eager" : "lazy"} />
+              </Link>
+              <span className="tp-lineup__name">{p.name}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="tp-quilt" aria-hidden="true" />
+      </section>
+
+      {/* 2 — meet the pups */}
+      <section className="tp-scene tp-meet" data-tone="light" style={{ ["--sky-top" as string]: "#fff1d8", ["--sky-bottom" as string]: "#fbe3b4" }} aria-labelledby="meet-title">
+        <header className="tp-meet__head gutter">
+          <div>
+            <h2 id="meet-title" className="scene-title">Meet the pups</h2>
+            <p>Real puppies, real photos, looking for their families right now.</p>
+          </div>
+          <Link className="btn btn-primary" to="/puppies">See all available puppies</Link>
+        </header>
+        <ol className="tp-doors" aria-label="Puppies looking for a family" tabIndex={0}>
+          {available.map((p, i) => (
+            <li key={p.slug} className="tp-door" data-open={i % 2 === 0}>
+              <Link to={`/puppies/${p.slug}`} className="tp-door__link">
+                <span className="tp-door__name">{p.name}</span>
+                <span className="tp-door__meta">{[p.isNamed ? p.breed + "," : "", p.sex + ",", p.cardAge, p.hasVideo ? ", with video" : ""].join(" ").replace(" ,", ",")}</span>
+                <span className="tp-door__frame">
+                  {i % 2 === 0 ? <img src={p.image} alt={`${p.name}, ${p.sex} ${p.breed} puppy`} loading="lazy" /> : <span className="tp-door__leaf" data-c={i % 4} />}
+                  <span className="tp-door__tag">Available</span>
+                </span>
+              </Link>
+            </li>
+          ))}
+          <li className="tp-door tp-door--all"><Link to="/puppies" className="tp-door__link"><span className="tp-door__name">Meet them all</span></Link></li>
+        </ol>
+        <div className="tp-floor" aria-hidden="true" />
+      </section>
+
+      {/* 3 — two ways */}
+      <section className="tp-scene tp-paths" data-tone="light" style={{ ["--sky-top" as string]: "#fbe3b4", ["--sky-bottom" as string]: "#f7d18d" }} aria-labelledby="paths-title">
+        <h2 id="paths-title" className="scene-title scene-title--center">Two ways to meet your puppy</h2>
+        <div className="tp-fork gutter">
+          <div className="tp-fork__signs"><span>Puppies in Dubai</span><span>Imported for you</span></div>
+          <div className="tp-fork__post" aria-hidden="true" />
+          <Reveal className="tp-way tp-way--left">
+            <div className="tp-way__art"><img src="/media/FHyoHcIosLZE/60f6e7e00a/27b888_323008bb0f6a41d4bde2a0da7206cd98f000.jpg" alt="A tiny apricot teddy bear puppy held up in the TeddyPups showroom" loading="lazy" /><small>In our showroom</small></div>
+            <p>See them, love them, take them home. Come meet our locally available puppies before you decide.</p>
+            <Link className="btn btn-primary" to="/puppies?origin=local">Meet local puppies</Link>
+          </Reveal>
+          <Reveal className="tp-way tp-way--right" delay={120}>
+            <div className="tp-way__art tp-way__art--flight"><i>Korea</i><i>Dubai</i></div>
+            <p>Exclusive Korean teacup puppies, delivered. Order from the world's most reputable breeders and let us handle the import.</p>
+            <Link className="btn btn-primary" to="/puppies?origin=imported">See imported puppies</Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 4 — journey */}
+      <section className="tp-scene tp-chat" data-tone="light" style={{ ["--sky-top" as string]: "#f7d18d", ["--sky-bottom" as string]: "#f0b866" }} aria-labelledby="journey-title">
+        <div className="tp-chat__grid gutter">
+          <div>
+            <h2 id="journey-title" className="scene-title">Your puppy journey</h2>
+            <p className="tp-chat__lede">A premium, step-by-step concierge experience. We make adoption simple, secure, and purely joyful.</p>
+            <ol className="tp-chat__steps">
+              {STEPS.map(([t, d], i) => (
+                <Reveal as="li" key={t} className="tp-chat__step" delay={i * 100}>
+                  <span className="tp-chat__num">{i + 1}</span>
+                  <div><h3>{t}</h3><p>{d}</p></div>
+                </Reveal>
+              ))}
+            </ol>
+            <Link className="btn btn-ghost" to="/how-it-works">How it works</Link>
+          </div>
+          <div className="tp-phone" aria-hidden="true">
+            <div className="tp-phone__head"><img src="/brand/logo.png" alt="" width={32} height={32} /><b>TeddyPups U.A.E.<small>online</small></b></div>
+            <div className="tp-phone__body">
+              <p className="tp-msg tp-msg--me">Hi TeddyPups! I'd love to know more about your puppies.</p>
+              <p className="tp-msg tp-msg--them">{STEPS[0][1]}</p>
+              <div className="tp-chips tp-chips--chat">{BREEDS.map((b) => <span key={b.key} className="tp-chip">{b.label}</span>)}</div>
+            </div>
+            <div className="tp-phone__input">Say hello on WhatsApp <span>➤</span></div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5 — passport */}
+      <section className="tp-scene tp-passport" data-tone="light" style={{ ["--sky-top" as string]: "#f0b866", ["--sky-bottom" as string]: "#a65a30" }} aria-labelledby="trust-title">
+        <Reveal className="tp-book gutter">
+          <div className="tp-book__page tp-book__page--left"><p className="hand-kicker">puppy passport</p><h2 id="trust-title" className="scene-title">Why families trust TeddyPups</h2></div>
+          <ul className="tp-book__page tp-book__page--right">{TRUST.map(([t, d]) => <li key={t}><h3>{t}</h3><p>{d}</p></li>)}</ul>
+        </Reveal>
+      </section>
+
+      {/* 6 — happy families */}
+      <section className="tp-scene tp-dusk" data-tone="dark" style={{ ["--sky-top" as string]: "#a65a30", ["--sky-bottom" as string]: "#4d2b19" }} aria-labelledby="dusk-title">
+        <div className="tp-dusk__head gutter">
+          <div>
+            <h2 id="dusk-title" className="scene-title">Happy families &amp; puppies</h2>
+            <p>We are truly honored to see our puppies become cherished members of loving families. These heartwarming moments have been shared by our valued clients who welcomed a Teddy Pup into their homes and hearts.</p>
+          </div>
+          <blockquote className="tp-bubble">“TeddyPups truly made our dream a reality. They supported us at every step of the import journey. Our Maltipoo arrived healthy, cheerful, and absolutely perfect. Having 24/7 support throughout the process gave us complete peace of mind.”<cite>Sarah M., Dubai, UAE</cite></blockquote>
+        </div>
+        <div className="tp-wallhouse gutter">
+          <ul className="tp-polaroids">
+            {families.featured.map((f, i) => (
+              <Reveal as="li" key={f.image} className="tp-polaroid" delay={(i % 4) * 90} tilt={((i * 29) % 70) / 10 - 3.5}>
+                <Link to="/happy-families"><img src={f.image} alt="A happy TeddyPups family with their new puppy" loading="lazy" /><span>{f.caption}</span></Link>
+              </Reveal>
+            ))}
+          </ul>
+          <Link className="btn btn-primary tp-wallhouse__cta" to="/happy-families">See every happy family</Link>
+        </div>
+      </section>
+
+      {/* 7 — questions */}
+      <section className="tp-scene tp-night" data-tone="dark" style={{ ["--sky-top" as string]: "#4d2b19", ["--sky-bottom" as string]: "#2f1a10" }} aria-labelledby="questions-title">
+        <div className="tp-night__grid gutter">
+          <div><h2 id="questions-title" className="scene-title">Questions, answered</h2><Link className="btn btn-ghost" to="/faq">Read all questions</Link><p className="tp-night__wonder" aria-hidden="true">?</p></div>
+          <ul className="tp-night__list">{FAQ.slice(0, 3).map((f) => <li key={f.q}><h3>{f.q}</h3><p>{f.a}</p></li>)}</ul>
+        </div>
+      </section>
+
+      {/* 8 — CTA */}
+      <section className="tp-scene tp-home" data-tone="dark" style={{ ["--sky-top" as string]: "#2f1a10", ["--sky-bottom" as string]: "#24130b" }} aria-labelledby="cta-title">
+        <div className="tp-home__copy gutter">
+          <h2 id="cta-title" className="scene-title scene-title--center">Ready to meet your new best friend?</h2>
+          <p className="tp-home__lede">Bring home a healthy, happy teacup or designer puppy with expert guidance every step of the way. We help you find the right match and ensure a smooth, safe delivery across the UAE.</p>
+          <div className="tp-house" aria-hidden="true"><span className="tp-house__door"><i /></span><span className="tp-house__mat">welcome home</span></div>
+          <div className="tp-home__actions">
+            <a className="btn btn-whatsapp" href={WA_LINK} target="_blank" rel="noreferrer">Enquire on WhatsApp</a>
+            <Link className="btn btn-ghost" to="/contact">Visit &amp; contact</Link>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
