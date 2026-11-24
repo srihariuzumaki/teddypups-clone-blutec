@@ -91,9 +91,35 @@ round-robin; no DOM is created while moving.
 while the page scrolls, and mouse movement only makes the mascot look at the cursor. The trail here follows the mouse
 because that was requested. When the walking mascot is built, the same print pool can be fed from its steps.
 
-**Planned (requested):** keep the cursor trail *and* add the original's mascot trail. While the page scrolls, the
-walking mascot lays a print at each footfall (left/right alternating, rotated to its heading). Both sources will
-share one stamping function and pool, so the two trails look identical.
+**Mascot trail (built):** the cursor trail is kept *and* the walking mascot now lays prints like the original: one per
+34 stride-units walked, alternating left/right foot, rotated to his heading, from a pool of 24 (see section 7).
+
+## 7. The mascot "Teddy" (SVG rig + walking journey)
+
+Files: `src/lib/mascot/{rig,buddies,journey,loop}.ts`, `src/components/ui/TeddySvg.tsx`, `src/components/layout/PupJourney.tsx`.
+Everything was ported from the reference's un-minified JS (same numbers), then verified against the live site.
+
+- **Rig (`rig.ts`).** A *pose* is 20 numbers (body angle, head offset, leg angles, tail, eyes, tongue...). `frame()` turns a
+  pose plus live state (stride phase, wag, gaze, blink, ear spring) into SVG `transform`/`opacity` strings for 25 named
+  parts (`data-p="head"`, `"tail"`, ...). `Rig.tick()` eases toward the target pose every frame (time constants like
+  0.16 s) and only writes attributes whose value changed. 12 poses: stand, walk, sit, peek, snug, lie, sleep, settle,
+  hop, sniff, bow, beg. The SVG itself is generated from the same path data (`TeddySvg.tsx`), so every pose renders
+  from one source.
+- **Tricks.** `ACTS` are timelines of `[seconds, fn]` cues (woof, spin, beg, bow, hop, love with hearts, tilt, sneeze,
+  zoomies, peekaboo, wake). Clicking him picks a random trick; mashing him 4 times in 0.7 s triggers zoomies.
+- **Static buddies (`buddies.ts`).** Every `.pup-buddy` in the page (scene stops, 404, puppy page, FAQ...) is attached to
+  a rig: blinks, wags, looks at the cursor, gets petted on hover, plays tricks on click and an idle trick every 9 s.
+  They only animate while on screen (IntersectionObserver) and not at all for reduced-motion users.
+- **Journey (`journey.ts`).** One fixed-position Teddy walks between the page's `[data-pup-stop]` spots as you scroll.
+  `measure()` finds each stop and the scroll range during which he should sit there (sticky/pinned scenes handled);
+  `place()` maps a scroll offset to a position along a cubic Bezier between the two stops, eased with smootherstep,
+  kept inside the safe area with soft clamps, hopping over "behind" stops; `tick()` sets pose/stride/facing, lays paw
+  prints, and moves the DOM. When scrolling stops mid-way he drifts on to the nearer stop. On phones a smaller Teddy
+  peeks in from alternate sides between scenes. While he is out, the static buddies in the stops are hidden
+  (`html[data-pup]`).
+- **Verification.** `scripts/qa/mascot.mjs` scrolls a page with motion on and prints his position, hold state and layer
+  order at 9 scroll offsets on both sites: **all 9 match exactly at 1440 px and at 390 px**, page heights equal, and the
+  number of simultaneous paw prints is 19 on both.
 
 ## 5. Problems met and how they were fixed
 
@@ -120,11 +146,12 @@ share one stamping function and pool, so the two trails look identical.
 | 19 | Dev server died after the session restart; QA failed with ERR_CONNECTION_REFUSED | Background process was gone | Restarted Vite in the background. |
 | 20 | Paw cursor still the default arrow | Before the files existed Vite returned an HTML page (200) for those URLs, which browsers cached | New file names (`*-v2`), PNG first + SVG fallback; told the user to hard-reload. |
 | 21 | Paw trail followed scroll instead of the mouse | I copied the original's scroll-driven stamping without the mascot | Recorded the original, confirmed the mechanism, then (as requested) switched to pointer-driven stamping with queue + gap. |
+| 23 | Teddy's SVG paths were cut off (`...[210]`) on the puppy page and the 404 | The DOM-dump helper truncates attribute values at 70 characters, and I pasted its output | Generate the SVG from the rig's own path functions (`TeddySvg`); 404 diff fell from 0.69 % to 0.08 %. |
+| 24 | Puppy page Teddy sat instead of peeking | Default pose used | `pose="peek"` (read from the original DOM). |
 | 22 | Trail "gap too big" / "only 1–2 paws when slow" | Gap 90 px, step 78 px | Tuned to gap 20, step 38, pool 16 and checked with scripted slow/medium mouse paths. |
 
 ## 6. Known gaps (honest list)
-- The mascot is a static pose; the walking layer, poses and speech bubbles are not built.
-- Intro curtain, hero lineup duck-and-pop and the mascot-driven trail are not built.
+- Intro curtain (route transition) and the hero lineup duck-and-pop are not built.
 - `/happy-families` is 8.7 % off at 390 px (3 px shorter); not yet traced.
 - Forms are mocked unless a form endpoint is configured.
 - Not yet deployed; not yet pushed to GitHub.

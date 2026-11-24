@@ -5,6 +5,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import WhatsAppBar from "./WhatsAppBar";
 import PawPrints from "./PawPrints";
+import PupJourney from "./PupJourney";
+import { attachBuddies } from "../../lib/mascot/buddies";
 import SmoothScroll from "../../lib/SmoothScroll";
 
 /** Scroll to top on route change, or to the #hash target. */
@@ -48,6 +50,9 @@ export default function Layout() {
   useInternalLinks();
   const mainRef = useRef<HTMLElement>(null);
   useRevealScope(mainRef);
+  const { pathname } = useLocation();
+  // Bring every Teddy on the page to life (blink, wag, tricks on click); the walking mascot takes over the stops.
+  useEffect(() => attachBuddies(document), [pathname]);
   return (
     <div className="relative">
       <SmoothScroll />
@@ -55,6 +60,7 @@ export default function Layout() {
       <Header />
       <main ref={mainRef} id="main" tabIndex={-1} className="relative pt-[var(--header-h)] outline-none">
         <Outlet />
+        <PupJourney routeKey={pathname} />
       </main>
       <PawPrints />
       <Footer />

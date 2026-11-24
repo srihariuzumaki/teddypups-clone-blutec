@@ -217,7 +217,7 @@ function Detail({ pup }: { pup: Puppy }) {
               <div className="lg:sticky lg:top-[calc(var(--header-h)+5.5rem)]">
                 <div className="tp-tag tp-board mt-16 !rounded-[2.2rem_2.2rem_2.2rem_0.6rem] !p-7 md:!p-9 lg:mt-20" data-reveal="true">
                   <span aria-hidden="true" className="tp-tag__ring" />
-                  <Teddy className="absolute -top-[4.8rem] right-6 w-[9.5rem]" label={isGone ? "Teddy, congratulating the family" : "Teddy, hoping you'll pick a pup"} />
+                  <Teddy pose="peek" className="absolute -top-[4.8rem] right-6 w-[9.5rem]" label={isGone ? "Teddy, congratulating the family" : "Teddy, hoping you'll pick a pup"} />
                   {isGone ? (
                     <span className="inline-grid place-items-center rounded-full border-[3px] border-current px-3 py-1 font-scrawl text-sm uppercase tracking-wide -rotate-6 text-toffee-deep">Gone home ♥</span>
                   ) : (

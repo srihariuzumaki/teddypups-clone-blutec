@@ -104,11 +104,21 @@ Measured result against the live site (1440 px): header/footer/home sections 0â€
 
 **Outcome:** This file and [IMPLEMENTATION.md](IMPLEMENTATION.md).
 
+### 10. Deploy, then the mascot
+**Prompts:**
+> you can name the github repo accordingly and if possinle push it to the github and check if vercel is connected if not  iw ill connect it
+
+> ok now the github is pushed next
+
+> ok now that done can we move on to the svg animations ?
+
+**Outcome:** Repo `teddypups-clone-blutec` pushed; Vercel project created and deployed (Deployment Protection must be switched off in the dashboard for reviewers). Then the SVG animation work: I read the original's mascot engine (rig, acts, journey) and ported it to `src/lib/mascot/`. Verified by scrolling both sites and comparing Teddy's position at 9 offsets (all identical at 1440 and 390 px).
+**My part:** I created the GitHub token/login and the repo, and chose the next priority (mascot after deploy). Found and fixed a bug of mine on the way (truncated SVG paths).
+
 ---
 
 ## Still to do (as of this log)
-- Mascot (walking layer, poses), intro curtain, hero lineup duck-and-pop.
-- Mascot paw trail (requested): the walking mascot lays prints as it moves, in addition to the cursor trail.
+- Intro curtain (route transition), hero lineup duck-and-pop.
 - Real form endpoint (currently mocked unless `VITE_FORM_ENDPOINT` is set).
 - GitHub push, Vercel deploy, README, Loom, submission email.
 
