@@ -15,6 +15,8 @@ export function useMeetPin(rootRef: RefObject<HTMLElement | null>) {
     const stage = section.querySelector<HTMLElement>(".tp-meet__stage")!;
     const doors = [...track.children] as HTMLElement[];
     const mqDesktop = matchMedia("(min-width: 1024px)");
+    const rtl = document.documentElement.dir === "rtl"; // the treadmill runs the other way in Arabic
+    const dir = rtl ? -1 : 1;
     let pinned = false, overflow = 0, target = 0, current = 0, raf = 0;
 
     const measure = () => {
@@ -32,11 +34,11 @@ export function useMeetPin(rootRef: RefObject<HTMLElement | null>) {
         track.style.transform = "";
         doors.forEach((d) => (d.dataset.open = "true"));
       }
-      overflow = Math.max(0, track.scrollWidth - innerWidth);
+      overflow = Math.max(0, (rtl ? track.getBoundingClientRect().width : track.scrollWidth) - innerWidth); // RTL scrollWidth ignores overflow to the left
       range.style.height = pinned ? `calc(100vh + ${Math.round(overflow * 0.8)}px)` : "";
       range.style.setProperty("--pinned", pinned ? "1" : "0");
       const teddy = hall.querySelector<HTMLElement>(".tp-meet__teddy");
-      if (teddy) { teddy.dataset.pose = pinned ? "walk" : "sit"; if (pinned) teddy.dataset.act = "treadmill"; else delete teddy.dataset.act; }
+      if (teddy) { teddy.dataset.facing = rtl ? "left" : "right"; teddy.dataset.pose = pinned ? "walk" : "sit"; if (pinned) teddy.dataset.act = "treadmill"; else delete teddy.dataset.act; }
       read();
       apply(true);
     };
@@ -51,11 +53,11 @@ export function useMeetPin(rootRef: RefObject<HTMLElement | null>) {
       current = snap ? target : current + (target - current) * 0.16;
       if (Math.abs(target - current) < 0.0004) current = target;
       const x = -overflow * current;
-      track.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
-      hall.style.setProperty("--floor-x", `${x.toFixed(1)}px`);
+      track.style.transform = `translate3d(${(x * dir).toFixed(1)}px,0,0)`;
+      hall.style.setProperty("--floor-x", `${(x * dir).toFixed(1)}px`);
       const edge = innerWidth * 0.36;
       for (const d of doors) {
-        const open = d.offsetLeft + x < edge;
+        const open = rtl ? innerWidth - d.getBoundingClientRect().right < edge : d.offsetLeft + x < edge;
         if ((d.dataset.open === "true") !== open) d.dataset.open = String(open);
       }
     };

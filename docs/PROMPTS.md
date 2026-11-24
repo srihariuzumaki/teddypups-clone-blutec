@@ -154,10 +154,18 @@ Measured result against the live site (1440 px): header/footer/home sections 0â€
 **Outcome:** Claude proposed extras ranked by value; I picked CI first. GitHub Actions workflow (install, type-check, build), a full README rewrite, Web3Forms wired up (my access key), then a themed HTML email through EmailJS with Web3Forms as fallback (puppy name instead of id, empty fields hidden). Traced and fixed the `/happy-families` 390 px height mismatch (rounded thumbnail ratios in the original).
 **My part:** I chose the priorities (CI, then email, code splitting deferred), created the Web3Forms and EmailJS accounts, supplied the keys and fixed the Gmail connection when EmailJS returned 412. I judged the plain email "bland" and asked for the site theme. Keys are public-by-design values, never secrets.
 
+### 14. Arabic / RTL version
+**Prompt:**
+> no we will do the arabic rtl one right now
+
+**Outcome:** Claude first checked how much copy and CSS there was (709 strings, 5,000 lines of physical-direction CSS), then built a runtime translation layer plus an RTL stylesheet instead of rewriting every page: crawl script to list strings, Arabic dictionary and templates, MutationObserver translator, Arabic font, header toggle, RTL fixes (switch, signposts, pinned scroll, bidi numbers). Verified by screenshots of every route at 1440 and 390 px and by re-crawling for untranslated strings. Also found and fixed the footer showing `[email protected]` in English.
+**My part:** I chose Arabic/RTL as the standout feature (over code splitting, which I deferred). Translation quality still needs a native-speaker review.
+
 ---
 
 ## Still to do (as of this log)
 - Loom video and the submission email.
+- Native-speaker review of the Arabic copy.
 - Code splitting + Lighthouse pass (resize the large wall photos too); `/happy-families` at 768 px is 26 px shorter.
 
 ## Things I should be ready to explain in the Loom

@@ -195,10 +195,8 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a className="break-all hover:text-honey" href="/cdn-cgi/l/email-protection#f29b9c949db29b9c818693909b88859790dc919d9f">
-                <span className="__cf_email__" data-cfemail="ff96919990bf96918c8b9e9d9685889a9dd19c9092">
-                  [email protected]
-                </span>
+              <a className="break-all hover:text-honey" href="mailto:info@instabizweb.com">
+                <bdi>info@instabizweb.com</bdi>
               </a>
             </li>
             <li>

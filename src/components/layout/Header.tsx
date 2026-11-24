@@ -3,6 +3,22 @@ import { Link, useLocation } from "react-router-dom";
 import { NAV, PHONE_DISPLAY, WA_LINK } from "../../data/site";
 import { useHeaderState } from "../../lib/useHeaderState";
 import Paw from "./Paw";
+import { getLang, setLang } from "../../i18n";
+
+function LangToggle({ className = "" }: { className?: string }) {
+  const ar = getLang() === "ar";
+  return (
+    <button
+      type="button"
+      lang={ar ? "en" : "ar"}
+      className={`tp-lang ${className}`.trim()}
+      aria-label={ar ? "Switch to English" : "التبديل إلى العربية"}
+      onClick={() => setLang(ar ? "en" : "ar")}
+    >
+      {ar ? "EN" : "عربي"}
+    </button>
+  );
+}
 
 export default function Header() {
   const { pathname } = useLocation();
@@ -76,6 +92,7 @@ export default function Header() {
           </ul>
         </nav>
         <div className="tp-header__end">
+          <LangToggle />
           <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp tp-header__wa">
             WhatsApp us
           </a>
@@ -123,6 +140,7 @@ export default function Header() {
                   WhatsApp us
                 </a>
                 <p className="text-center text-sm font-medium">{PHONE_DISPLAY}</p>
+                <LangToggle className="tp-lang--menu" />
               </div>
             </div>
           </dialog>

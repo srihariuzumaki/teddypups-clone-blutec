@@ -1,0 +1,41 @@
+/* Arabic / RTL overrides. Everything is scoped to html[dir="rtl"], so the English site is untouched. */
+
+/* ---- language toggle (shown in both languages) ---- */
+.tp-lang {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 2.5rem; min-width: 2.75rem; padding: 0 0.9rem;
+  border: 2px solid var(--color-cocoa); border-radius: 999px;
+  background: var(--color-milk); color: var(--color-cocoa);
+  font: 600 0.95rem/1 var(--font-sans); cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s var(--ease-pounce);
+}
+.tp-lang:hover { background: var(--color-honey-soft); transform: translateY(-1px); }
+.tp-lang:focus-visible { outline: 3px solid var(--color-toffee); outline-offset: 2px; }
+.tp-lang--menu { width: 100%; height: 2.75rem; background: transparent; }
+
+/* ---- typography ---- */
+html[dir="rtl"] {
+  --font-fraunces: "Fraunces Variable", "Readex Pro Variable", "Readex Pro", "Noto Naskh Arabic", Georgia, serif;
+  --font-figtree: "Figtree Variable", "Readex Pro Variable", "Readex Pro", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-shantell: "Shantell Sans Variable", "Readex Pro Variable", "Readex Pro", "Noto Sans Arabic", ui-rounded, sans-serif;
+}
+/* tracking breaks Arabic letter joining */
+html[dir="rtl"] *, html[dir="rtl"] *::before, html[dir="rtl"] *::after { letter-spacing: 0 !important; }
+html[dir="rtl"] .font-plush { line-height: 1.3; font-weight: 700; text-wrap: balance; }
+html[dir="rtl"] .font-scrawl { font-weight: 500; line-height: 1.5; }
+html[dir="rtl"] body { line-height: 1.7; }
+
+/* ---- components whose geometry is written with physical offsets ---- */
+html[dir="rtl"] .tp-switch__thumb { left: auto; right: 0.4rem; translate: calc(var(--at) * -100%) 0; }
+html[dir="rtl"] .tp-meet[data-pinned] .tp-meet__track { left: auto; right: 0; }
+html[dir="rtl"] .tp-meet[data-pinned] .tp-meet__teddy { left: auto; right: 14vw; }
+
+/* signposts point away from the post: in RTL the "local" sign sits on the right, so its tip must face right */
+html[dir="rtl"] .tp-sign--left { border-left: 3px solid var(--color-cocoa); padding-left: 1.4rem; border-right: 0; padding-right: 0.6rem; rotate: 1.5deg; margin-left: 0; }
+html[dir="rtl"] .tp-sign--left:after { border: 3px solid var(--color-cocoa); border-bottom: 0; border-left: 0; left: auto; right: -1.47rem; }
+html[dir="rtl"] .tp-sign--right { border-right: 3px solid var(--color-cocoa); padding-right: 1.4rem; border-left: 0; padding-left: 0.6rem; rotate: -2deg; }
+html[dir="rtl"] .tp-sign--right:after { border: 3px solid var(--color-cocoa); border-top: 0; border-right: 0; right: auto; left: -1.47rem; }
+
+/* reading-progress ribbon lives in the leading gutter */
+html[dir="rtl"] .tp-ribbon { left: auto; right: max(0.3rem, calc(var(--gutter) * 0.5 - 0.6rem)); }
+

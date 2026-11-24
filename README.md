@@ -16,6 +16,7 @@ made for the Blutec.AI technical assignment.
   scroll-driven flight plane, `<dialog>` mobile menu, reading-progress ribbon.
 - **Teddy the mascot**: an SVG rig with 12 poses and tricks. He walks a Bézier path between sections while you scroll
   and leaves paw prints. Static buddies react to hover, cursor and clicks.
+- **Arabic / RTL version** (extra): a header toggle switches the whole site to Arabic with a right-to-left layout, including the pinned scroll and mascot ([how](docs/IMPLEMENTATION.md#8c-arabic--rtl-extra-not-in-the-original)). English is untouched.
 - Loading "curtain" on every load and page switch, hero lineup that swaps puppies with name bubbles, custom paw cursor
   with a paw trail that follows pointer movement.
 
@@ -49,6 +50,7 @@ Needs Chromium; paths are set for `/usr/bin/chromium` and the dev server on port
 npm run dev &
 node scripts/qa/qa.mjs /faq --vw 390            # screenshot original vs ours, print mismatch % per section
 node scripts/qa/mascot.mjs / --n 9              # scroll with motion on, log Teddy's position (add --orig for the reference)
+LANG_AR=1 node scripts/i18n/extract.mjs         # lists strings still in English when the site is in Arabic
 ```
 Output goes to `qa-out/` (gitignored). `ORIG_URL` / `OURS_URL` override the two sites.
 

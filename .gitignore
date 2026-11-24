@@ -6,3 +6,5 @@ qa-out/
 .vercel
 .env*
 tsconfig.tsbuildinfo
+scripts/i18n/skeleton.txt
+scripts/i18n/untranslated.json

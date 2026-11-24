@@ -4,6 +4,7 @@ import { available, gone, findPuppy, type Puppy } from "../data/puppies";
 import extra from "../data/detail-extra.json";
 import { focalStyle, imgAlt } from "../lib/puppyImage";
 import { WA_LINK, waFor } from "../data/site";
+import { tx } from "../i18n";
 import { submitEnquiry, validateEnquiry, type FieldErrors } from "../lib/submitEnquiry";
 import { usePageMeta } from "../lib/usePageMeta";
 import Teddy from "../components/ui/Teddy";
@@ -117,7 +118,7 @@ function Detail({ pup }: { pup: Puppy }) {
   const prev = group[(idx - 1 + group.length) % group.length];
   const next = group[(idx + 1) % group.length];
 
-  const waText = isGone ? "Hi! I'd love to find a puppy like this one." : `Hi! I'd love to know more about ${pup.name}${pup.isNamed ? ` (${pup.breed})` : ""}.`;
+  const waText = tx(isGone ? "Hi! I'd love to find a puppy like this one." : `Hi! I'd love to know more about ${pup.name}${pup.isNamed ? ` (${pup.breed})` : ""}.`);
   const askName = isGone ? "a puppy like this" : pup.isNamed ? pup.name : "this puppy";
   const nameForPaper = pup.isNamed ? pup.name : `this ${pup.breed}`;
   const where = pup.origin === "local" ? "In Dubai" : "Imported for you";
@@ -163,7 +164,7 @@ function Detail({ pup }: { pup: Puppy }) {
                   {n > 1 && (
                     <div className="absolute inset-x-4 bottom-4 flex justify-between">
                       <button type="button" className="grid size-12 place-items-center rounded-full border-2 border-cocoa bg-milk/95 text-xl font-bold" aria-label="Previous photo" onClick={() => go(-1)}>‹</button>
-                      <span className="self-center rounded-full bg-cocoa/80 px-3 py-1 text-sm font-semibold text-milk">{at + 1} / {n}</span>
+                      <span className="self-center rounded-full bg-cocoa/80 px-3 py-1 text-sm font-semibold text-milk"><bdi dir="ltr">{at + 1} / {n}</bdi></span>
                       <button type="button" className="grid size-12 place-items-center rounded-full border-2 border-cocoa bg-milk/95 text-xl font-bold" aria-label="Next photo" onClick={() => go(1)}>›</button>
                     </div>
                   )}
@@ -297,7 +298,7 @@ const INPUT = "mt-1.5 h-12 w-full rounded-2xl border-2 border-cocoa/60 bg-milk p
 function EnquirySection({ pup, id, chapter, isGone }: { pup: Puppy; id: string; chapter: number; isGone: boolean }) {
   const [errors, setErrors] = useState<FieldErrors & { form?: string }>({});
   const [state, setState] = useState<"idle" | "sending" | "sent">("idle");
-  const msg = `Hi! I'd love to know more about ${pup.name}${pup.isNamed ? ` (${pup.breed})` : ""}.`;
+  const msg = tx(`Hi! I'd love to know more about ${pup.name}${pup.isNamed ? ` (${pup.breed})` : ""}.`);
   const title = isGone ? "Looking for a puppy like this?" : pup.isNamed ? `Ask about ${pup.name}` : "Ask about this puppy";
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -87,7 +87,7 @@ export default function HappyFamilies() {
       >
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between gap-4 px-4 py-3">
-            <p className="font-scrawl text-lg">{at + 1} / {photos.length}</p>
+            <p className="font-scrawl text-lg"><bdi dir="ltr">{at + 1} / {photos.length}</bdi></p>
             <button type="button" className="h-11 rounded-full bg-milk px-5 font-semibold text-cocoa" onClick={close}>Close</button>
           </div>
           <div className="relative flex-1 overflow-hidden">

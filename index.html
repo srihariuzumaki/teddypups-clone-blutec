@@ -2,6 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script>
+      // Apply the saved language before first paint (the toggle in the header reloads the page).
+      try {
+        var q = new URLSearchParams(location.search).get("lang");
+        if (q === "ar" || q === "en") localStorage.setItem("tp-lang", q);
+        if (localStorage.getItem("tp-lang") === "ar") { document.documentElement.lang = "ar"; document.documentElement.dir = "rtl"; }
+      } catch (e) {}
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>TeddyPups U.A.E. — Premium teacup puppies in Dubai</title>
     <meta name="description" content="Teddy bear and teacup puppies in Dubai. Meet local puppies in our Downtown Dubai showroom or bring home a rare breed imported from trusted breeders." />
