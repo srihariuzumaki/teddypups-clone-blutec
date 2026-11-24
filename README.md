@@ -20,6 +20,9 @@ made for the Blutec.AI technical assignment.
 - Loading "curtain" on every load and page switch, hero lineup that swaps puppies with name bubbles, custom paw cursor
   with a paw trail that follows pointer movement.
 
+## Performance
+Lighthouse (mobile) on the live site: performance 95 to 99 on most pages (83 on the puppy page), accessibility 100, best practices 100, SEO 100. Route-level code splitting (first bundle 46 KB gzip), build-time WebP variants for every photo, static robots/sitemap. Details and before/after: [docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md#8d-performance-pass).
+
 ## Fidelity
 Each page was captured from the original and from this app with Playwright and pixel-diffed (`scripts/qa/qa.mjs`).
 At 1440 px the home sections differ by 0–0.1 %, inner pages by 0.03–0.5 %, puppy pages by 0.1–0.3 %, with identical page

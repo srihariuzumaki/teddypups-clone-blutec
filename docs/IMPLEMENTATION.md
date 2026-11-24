@@ -216,6 +216,19 @@ Lighthouse (mobile, throttled) on the live site was already 93 to 97 on the best
 - **Responsive WebP variants** (`scripts/make-variants.mjs`, runs as part of `npm run build`, about 17 s): every photo in `public/media` (some 3120x4160 px) gets 320 to 1600 px WebP copies in `public/media-opt` (gitignored, rebuilt on Vercel/CI). `src/lib/images.ts` adds a `srcset` to each `/media/` image, including ones React renders later (a MutationObserver), so I did not have to touch 8,000 lines of ported markup. The original stays in `src` for the full-screen viewer. Image bytes per page, before to after (1440 px): home 3.6 MB to 0.9 MB, /puppies 2.5 MB to 0.3 MB, /happy-families 15.2 MB to 1.4 MB, puppy page 565 KB to 102 KB. Pixel-diff against the original did not get worse (home sections 0 to 0.12 %, /happy-families at 390 px 6.3 % to 5.8 %).
 - **Logo and favicon** were 800 px and 512 px PNGs for a 56 px image: now a 7 KB WebP and a 96 px icon.
 - **`robots.txt` and `sitemap.xml`** (`npm run sitemap`) as real static files.
+**Lighthouse results** (mobile, simulated throttling, live site; performance / accessibility / best practices / SEO):
+
+| Page | Before | After |
+|---|---|---|
+| Home | 69 to 93 (noisy) / 100 / 100 / 92 | 95 / 100 / 100 / 100 |
+| /puppies | 88 / 100 / 100 / 92 | 96 / 100 / 100 / 100 |
+| Puppy page | 91 / 100 / 100 / 92 | 83 / 100 / 100 / 100 |
+| /happy-families | 90 (4.5 MB) / 100 / 100 / 92 | 96 (1.0 MB) / 100 / 100 / 100 |
+| /how-it-works | 92 / 100 / 100 / 92 | 98 / 100 / 100 / 100 |
+| /faq | 92 / 100 / 100 / 92 | 98 / 100 / 100 / 100 |
+| /contact | 97 / 100 / 100 / 92 | 99 / 100 / 100 / 100 |
+
+Two things I got wrong on the way and fixed: (1) with plain `React.lazy`, landing directly on e.g. /faq painted the footer before the page arrived, a layout shift of 0.97 on every inner page. Fix: a small `page()` wrapper that renders synchronously once its chunk is loaded, and the landing route's chunk is loaded before the first render. (2) The puppy page is the one score that went down (91 to 83): its main photo now appears a little later because the route chunk has to arrive first. Not fixed, noted.
 - Not changed on purpose: the intro curtain (it is part of the original's behaviour and delays first contentful paint by about a second), and the full-axis display fonts the design depends on.
 
 ## 9. Known gaps (honest list)

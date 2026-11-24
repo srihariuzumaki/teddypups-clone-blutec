@@ -161,12 +161,21 @@ Measured result against the live site (1440 px): header/footer/home sections 0â€
 **Outcome:** Claude first checked how much copy and CSS there was (709 strings, 5,000 lines of physical-direction CSS), then built a runtime translation layer plus an RTL stylesheet instead of rewriting every page: crawl script to list strings, Arabic dictionary and templates, MutationObserver translator, Arabic font, header toggle, RTL fixes (switch, signposts, pinned scroll, bidi numbers). Verified by screenshots of every route at 1440 and 390 px and by re-crawling for untranslated strings. Also found and fixed the footer showing `[email protected]` in English.
 **My part:** I chose Arabic/RTL as the standout feature (over code splitting, which I deferred). Translation quality still needs a native-speaker review.
 
+### 15. Performance optimisation
+**Prompts:**
+> before that are there anu things that we can add more ?
+
+> we will start with the perormance optimization
+
+**Outcome:** Claude listed possible extras by value and time; I picked performance first. Measured a Lighthouse baseline on every route, then: route code splitting with idle prefetch, Arabic dictionaries kept out of the English bundle, build-time WebP variants plus a runtime `srcset` layer, a smaller logo/favicon, real `robots.txt` and `sitemap.xml`. Lighthouse showed a layout-shift regression I had introduced with `React.lazy` (0.97 CLS); fixed with a synchronous page wrapper and landing-chunk preload. Final numbers are in IMPLEMENTATION.md 8d.
+**My part:** I chose performance over the other extras and the order of work; the measurements decide what counts as done.
+
 ---
 
 ## Still to do (as of this log)
 - Loom video and the submission email.
 - Native-speaker review of the Arabic copy.
-- Code splitting + Lighthouse pass (resize the large wall photos too); `/happy-families` at 768 px is 26 px shorter.
+- `/happy-families` at 768 px is 26 px shorter than the original; puppy-page LCP.
 
 ## Things I should be ready to explain in the Loom
 - Why Vite + React instead of the original's Next.js.
