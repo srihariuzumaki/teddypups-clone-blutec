@@ -71,6 +71,7 @@ export default function Contact() {
       if (busy) return;
       const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
       if (data.website) return finish(); // honeypot: pretend success
+      data.puppy = form.querySelector<HTMLSelectElement>("select[name=puppyId]")?.selectedOptions[0]?.text.replace(/\s+/g, " ").trim() || "Any puppy (not sure yet)";
       const errs = validateEnquiry(data);
       if (Object.keys(errs).length) return showErrors(errs, "Almost there — a few blanks need filling in.");
       clearErrors();
