@@ -9,12 +9,13 @@ import "./styles/index.css";
 import "./styles/rtl.css";
 import { getLang } from "./i18n/lang";
 import { optimizeImages } from "./lib/images";
+import { preloadFor } from "./routes";
 
 const ar = getLang() === "ar";
 if (ar) { document.documentElement.lang = "ar"; document.documentElement.dir = "rtl"; import("./styles/arabic-font"); }
 
 // English never downloads the Arabic dictionaries; in Arabic they are loaded before the first render.
-const translator = ar ? await import("./i18n/dom") : null;
+const [translator] = await Promise.all([ar ? import("./i18n/dom") : null, preloadFor(location.pathname)]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -31,10 +31,10 @@ Requires Node 20+ (CI uses 22).
 ```bash
 npm install
 npm run dev        # http://localhost:5173
-npm run build      # type-check (tsc -b) + production build into dist/
+npm run build      # builds image variants, type-checks (tsc -b), then production build into dist/
 npm run preview    # serve the production build
 ```
-Photos and videos are already committed under `public/`. `npm run assets` re-downloads them and `npm run data`
+Photos and videos are already committed under `public/`; `npm run build` derives resized WebP copies from them (`public/media-opt`, not committed, needs `sharp`). `npm run assets` re-downloads them and `npm run data`
 rebuilds `src/data/puppies.json` from `data/`; you don't need either to run the app.
 
 **Contact form:** mocked unless configured. With `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID` and `VITE_EMAILJS_PUBLIC_KEY` it sends a themed HTML email (template in [docs/email/enquiry.html](docs/email/enquiry.html)) via EmailJS; `VITE_WEB3FORMS_KEY` or `VITE_FORM_ENDPOINT` is a plain-email fallback. All of these keys are public by design. Submissions pass through those third-party services.

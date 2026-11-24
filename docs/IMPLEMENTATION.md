@@ -189,6 +189,7 @@ showroom has 15 available puppies, so the rest rotate in.
 | 31 | Segmented switch showed a blank pill in RTL | Thumb is `left:.4rem` + `translate: +N*100%` | Mirrored in `rtl.css`. |
 | 32 | "1 / 2" shown as "2 / 1" and phone numbers backwards in Arabic | Neutral characters take the paragraph direction | `<bdi dir="ltr">` and Unicode isolates. |
 | 33 | Teddy hovered ~115 px above the footer basket in Arabic (found by the user) | Debugged by logging the journey model: in Arabic the footer is shorter, so the minimum-walk spacing in `resolveHolds` pushed the last hold range to start *past the end of the page*; at max scroll he settled to a scroll position the page can't reach | Clamp the last hold to `maxScroll - 1` after spacing is applied (this was a latent bug for any short page or window size, not an Arabic-only one), plus a watchdog that re-measures if the document height changes after the last resize. English parity re-checked with `mascot.mjs` against the original: identical. |
+| 34 | Home chunk 1 MB, photos up to 4 MB each, `/robots.txt` returned HTML | Everything imported eagerly; originals served as-is; SPA rewrite catches every path | See 8d: route chunks with idle prefetch, build-time WebP variants + runtime `srcset`, static robots/sitemap. |
 
 ## 8b. CI and the contact email
 - **CI** (`.github/workflows/ci.yml`): on every push to `main` and every PR, GitHub installs with `npm ci`, runs `npm run build` (type-check + production build), checks `dist/index.html` exists and uploads `dist`. It catches errors that only show on a clean machine. The visual QA needs Chromium and the live reference, so it stays a local tool.
@@ -207,11 +208,20 @@ The brief was a 1:1 clone, so this is deliberately additive: English renders exa
 
 **Honest limits:** the Arabic was written by the AI and has not been reviewed by a native speaker; puppy names stay in Latin script; the curtain's running Teddy and the plane still travel left to right; the wall of 64 photos and long copy are translated but the originals' tone is approximated.
 
+## 8d. Performance pass
+Lighthouse (mobile, throttled) on the live site was already 93 to 97 on the best pages. The weak spots were a single 1 MB JavaScript bundle, multi-megabyte photos and a broken `robots.txt` (the SPA rewrite answered it with the HTML shell, 29 "errors").
+
+- **Route code splitting** (`src/routes.ts`): only the shell and the home page are in the first bundle; every other route is a `React.lazy` chunk. Chunks are prefetched when the browser is idle or the pointer/focus first moves toward a link, so the loading curtain never waits on the network (`Suspense fallback={null}` is only a safety net). Main bundle 1004 KB to 239 KB (gzip 197 to 46 KB).
+- **English no longer ships the Arabic dictionaries**: the language helpers moved to a tiny `i18n/lang.ts`; the dictionaries and translator are dynamic imports, loaded before first render only in Arabic.
+- **Responsive WebP variants** (`scripts/make-variants.mjs`, runs as part of `npm run build`, about 17 s): every photo in `public/media` (some 3120x4160 px) gets 320 to 1600 px WebP copies in `public/media-opt` (gitignored, rebuilt on Vercel/CI). `src/lib/images.ts` adds a `srcset` to each `/media/` image, including ones React renders later (a MutationObserver), so I did not have to touch 8,000 lines of ported markup. The original stays in `src` for the full-screen viewer. Image bytes per page, before to after (1440 px): home 3.6 MB to 0.9 MB, /puppies 2.5 MB to 0.3 MB, /happy-families 15.2 MB to 1.4 MB, puppy page 565 KB to 102 KB. Pixel-diff against the original did not get worse (home sections 0 to 0.12 %, /happy-families at 390 px 6.3 % to 5.8 %).
+- **Logo and favicon** were 800 px and 512 px PNGs for a 56 px image: now a 7 KB WebP and a 96 px icon.
+- **`robots.txt` and `sitemap.xml`** (`npm run sitemap`) as real static files.
+- Not changed on purpose: the intro curtain (it is part of the original's behaviour and delays first contentful paint by about a second), and the full-axis display fonts the design depends on.
+
 ## 9. Known gaps (honest list)
 - `/happy-families` at 390 px: layout now matches (height Δ 1 px); 6.3 % remains from image sharpness (we show full-size photos, the original shows blurred 175 px thumbnails). At 768 px the page is 26 px shorter (not traced).
 - Mobile footer (390 px) is ~9 % off the original (layout identical; not traced, likely the animated stars/moon).
 - Arabic has not been reviewed by a native speaker (see 8c).
-- Wall photos are the full-size originals (some 3120×4160): fine for fidelity, heavy for Lighthouse; resizing/srcset is a planned optimisation.
 - The contact form is mocked unless EmailJS / Web3Forms variables are set; the live site has them (EmailJS themed email, Web3Forms fallback).
 - Deployed on Vercel (Deployment Protection must be off for reviewers) and pushed to GitHub.
 - Mascot trail uses its own 24-print pool; the cursor trail has a separate 16-print pool (both are `.pup-prints`).
