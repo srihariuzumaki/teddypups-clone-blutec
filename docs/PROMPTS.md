@@ -115,10 +115,17 @@ Measured result against the live site (1440 px): header/footer/home sections 0â€
 **Outcome:** Repo `teddypups-clone-blutec` pushed; Vercel project created and deployed (Deployment Protection must be switched off in the dashboard for reviewers). Then the SVG animation work: I read the original's mascot engine (rig, acts, journey) and ported it to `src/lib/mascot/`. Verified by scrolling both sites and comparing Teddy's position at 9 offsets (all identical at 1440 and 390 px).
 **My part:** I created the GitHub token/login and the repo, and chose the next priority (mascot after deploy). Found and fixed a bug of mine on the way (truncated SVG paths).
 
+### 11. Loading screen and the plane
+**Prompt:**
+> ok now we need to make the loading thing kinda screen where it appears on every reload or page switch and also we need to animate the plane in both the home page and how it works section
+
+**Outcome:** The reference's "curtain" (loading screen with a running Teddy) on every load and page switch, and the scroll-driven plane on the home page and How it works, plus the missing step-card animation. Checked by logging state timings and plane positions on both sites.
+**My part:** I spotted these two missing pieces by comparing the sites.
+
 ---
 
 ## Still to do (as of this log)
-- Intro curtain (route transition), hero lineup duck-and-pop.
+- Hero lineup duck-and-pop.
 - Real form endpoint (currently mocked unless `VITE_FORM_ENDPOINT` is set).
 - GitHub push, Vercel deploy, README, Loom, submission email.
 

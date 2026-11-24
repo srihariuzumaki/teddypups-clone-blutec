@@ -7,6 +7,13 @@ export default function HowItWorks() {
   usePageMeta();
   const ref = useRef<HTMLDivElement>(null);
 
+  // The original flags the section "ready" after mount, which switches on the step cards' pop-in animation.
+  useEffect(() => {
+    const j = ref.current?.querySelector<HTMLElement>(".tp-journeys");
+    j?.setAttribute("data-ready", "true");
+    return () => j?.removeAttribute("data-ready");
+  }, []);
+
   useEffect(() => {
     const root = ref.current;
     const list = root?.querySelector<HTMLElement>('[role="tablist"]');

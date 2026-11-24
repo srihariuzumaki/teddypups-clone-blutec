@@ -121,6 +121,22 @@ Everything was ported from the reference's un-minified JS (same numbers), then v
   order at 9 scroll offsets on both sites: **all 9 match exactly at 1440 px and at 390 px**, page heights equal, and the
   number of simultaneous paw prints is 19 on both.
 
+## 8. Loading curtain and the flight plane
+
+- **Curtain (`RouteCurtain.tsx`, `lib/curtain.ts`).** A scalloped blanket with a running Teddy, portalled to `<body>` (the
+  original's CSS expects it there). States: `intro -> idle` on every full load; on an internal link click `covering` (300 ms)
+  `-> covered ->` route changes `-> lifting` (460 ms) `-> idle`. A capture-phase click handler intercepts same-origin links,
+  skips anchors, new tabs, downloads and modified clicks; back/forward uses a `snap` state; a 6 s timeout means a visitor
+  can never get stuck behind it. It also sets `html[data-curtain]` (locks scroll) and fires `tp:arrived` when it lifts.
+  `useRevealScope` holds scroll reveals while `curtainDown()` is true and releases them on `tp:arrived`, so content animates
+  in as the curtain lifts. Hidden for reduced motion. State timings were logged on both sites and match.
+- **Flight plane (`lib/flights.ts`).** The route is an SVG path. Progress = `(0.95*vh - top) / (0.7*vh + height)` of the card
+  (framer's `["start 95%", "end 25%"]`); the plane sits at `getPointAtLength(progress * length)`, rotated to the path
+  tangent (two points 1 px either side), opacity `(p - 0.11) / 0.06`. Reduced motion pins it at 0.62. Used on the home
+  "paths" scene and on `/how-it-works`; positions agree with the original to about 0.3 px at six scroll points.
+- **How it works.** The original sets `data-ready` on `.tp-journeys` after mount, which turns on the step cards' pop-in
+  (`tp-step-in`, staggered by `--i`); the postcard plane's bob is CSS. Both now work, including after switching tabs.
+
 ## 5. Problems met and how they were fixed
 
 | # | Problem | Cause | Fix |
@@ -148,10 +164,11 @@ Everything was ported from the reference's un-minified JS (same numbers), then v
 | 21 | Paw trail followed scroll instead of the mouse | I copied the original's scroll-driven stamping without the mascot | Recorded the original, confirmed the mechanism, then (as requested) switched to pointer-driven stamping with queue + gap. |
 | 23 | Teddy's SVG paths were cut off (`...[210]`) on the puppy page and the 404 | The DOM-dump helper truncates attribute values at 70 characters, and I pasted its output | Generate the SVG from the rig's own path functions (`TeddySvg`); 404 diff fell from 0.69 % to 0.08 %. |
 | 24 | Puppy page Teddy sat instead of peeking | Default pose used | `pose="peek"` (read from the original DOM). |
+| 25 | How-it-works steps didn't animate | `data-ready` flag missing; found by diffing live DOM attributes of both sites | Set it after mount. |
 | 22 | Trail "gap too big" / "only 1–2 paws when slow" | Gap 90 px, step 78 px | Tuned to gap 20, step 38, pool 16 and checked with scripted slow/medium mouse paths. |
 
 ## 6. Known gaps (honest list)
-- Intro curtain (route transition) and the hero lineup duck-and-pop are not built.
+- The hero lineup duck-and-pop is not built.
 - `/happy-families` is 8.7 % off at 390 px (3 px shorter); not yet traced.
 - Forms are mocked unless a form endpoint is configured.
 - Not yet deployed; not yet pushed to GitHub.
