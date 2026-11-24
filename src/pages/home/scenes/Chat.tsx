@@ -52,7 +52,7 @@ export default function Chat() {
         <div className="tp-chat__side">
           <div className="tp-phone" aria-label="A WhatsApp conversation with TeddyPups U.A.E." role="group">
             <div className="tp-phone__bar">
-              <img alt="" loading="lazy" width="40" height="40" decoding="async" className="tp-phone__avatar" style={{ color: "transparent" }} src="/brand/logo.png" />
+              <img alt="" loading="lazy" width="40" height="40" decoding="async" className="tp-phone__avatar" style={{ color: "transparent" }} src="/brand/logo-192.webp" />
               <span>
                 <span className="tp-phone__name">
                   TeddyPups U.A.E.

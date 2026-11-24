@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { NAV, PHONE_DISPLAY, WA_LINK } from "../../data/site";
 import { useHeaderState } from "../../lib/useHeaderState";
 import Paw from "./Paw";
-import { getLang, setLang } from "../../i18n";
+import { getLang, setLang } from "../../i18n/lang";
 
 function LangToggle({ className = "" }: { className?: string }) {
   const ar = getLang() === "ar";
@@ -71,7 +71,7 @@ export default function Header() {
     >
       <div className="tp-header__bar gutter">
         <Link className="tp-header__brand" aria-label="TeddyPups U.A.E. — home" to="/">
-          <img alt="" width={56} height={56} decoding="async" className="tp-header__logo" src="/brand/logo.png" />
+          <img alt="" width={56} height={56} decoding="async" className="tp-header__logo" src="/brand/logo-192.webp" />
           <span className="font-plush tp-header__name">TeddyPups</span>
         </Link>
         <nav aria-label="Main" className="tp-header__nav">

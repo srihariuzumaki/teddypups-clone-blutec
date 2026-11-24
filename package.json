@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "node scripts/make-variants.mjs && tsc -b && vite build",
+    "variants": "node scripts/make-variants.mjs",
+    "sitemap": "node scripts/build-sitemap.mjs",
     "preview": "vite preview",
     "data": "node scripts/build-data.mjs",
     "assets": "bash scripts/download-assets.sh"
@@ -31,6 +33,7 @@
     "playwright-core": "^1.65.1",
     "pngjs": "^7.0.0",
     "postcss": "^8.5.33",
+    "sharp": "^0.35.5",
     "typescript": "^7.0.2",
     "vite": "^8.3.8"
   }

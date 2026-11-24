@@ -1,14 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
-import Contact from "./pages/Contact";
-import Faq from "./pages/Faq";
-import GoneHome from "./pages/GoneHome";
-import HappyFamilies from "./pages/HappyFamilies";
 import Home from "./pages/Home";
-import HowItWorks from "./pages/HowItWorks";
-import NotFound from "./pages/NotFound";
-import PuppyDetail from "./pages/PuppyDetail";
-import Puppies from "./pages/Puppies";
+import { Contact, Faq, GoneHome, HappyFamilies, HowItWorks, NotFound, Puppies, PuppyDetail } from "./routes";
 
 export default function App() {
   return (

@@ -224,7 +224,7 @@ export default function Footer() {
       </div>
       <div className="gutter relative mx-auto mt-16 flex max-w-[110rem] flex-col items-start justify-between gap-4 border-t border-milk/15 pt-6 text-sm text-milk/60 md:flex-row md:items-center">
         <span className="flex items-center gap-3">
-          <img alt="" loading="lazy" width="36" height="36" decoding="async" className="size-9" style={{ color: "transparent" }} src="/brand/logo.png" />
+          <img alt="" loading="lazy" width="36" height="36" decoding="async" className="size-9" style={{ color: "transparent" }} src="/brand/logo-192.webp" />
           © 2026 TeddyPups U.A.E.
         </span>
         <span className="font-scrawl text-base text-honey/80">

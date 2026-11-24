@@ -4,7 +4,7 @@ import { available, gone, findPuppy, type Puppy } from "../data/puppies";
 import extra from "../data/detail-extra.json";
 import { focalStyle, imgAlt } from "../lib/puppyImage";
 import { WA_LINK, waFor } from "../data/site";
-import { tx } from "../i18n";
+import { tx } from "../i18n/lang";
 import { submitEnquiry, validateEnquiry, type FieldErrors } from "../lib/submitEnquiry";
 import { usePageMeta } from "../lib/usePageMeta";
 import Teddy from "../components/ui/Teddy";

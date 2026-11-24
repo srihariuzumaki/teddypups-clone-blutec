@@ -2,26 +2,8 @@ import { UI } from "./ar-ui";
 import { PAGES } from "./ar-pages";
 import { RULES, compose, setLookup } from "./ar-puppies";
 
-export type Lang = "en" | "ar";
-const KEY = "tp-lang";
-
-/** The language is decided once per load (the toggle reloads), and index.html applies lang/dir before first paint. */
-export function getLang(): Lang {
-  try {
-    const q = new URLSearchParams(location.search).get("lang");
-    if (q === "ar" || q === "en") { localStorage.setItem(KEY, q); return q; }
-    return localStorage.getItem(KEY) === "ar" ? "ar" : "en";
-  } catch { return "en"; }
-}
-export const isRtl = () => document.documentElement.dir === "rtl";
-/** Translate text that is written by code (prefilled messages, links) rather than rendered into the DOM. */
-export const tx = (en: string) => (isRtl() ? tr(en) : en);
-
-export function setLang(l: Lang) {
-  try { localStorage.setItem(KEY, l); } catch { /* private mode */ }
-  const u = new URL(location.href); u.searchParams.delete("lang");
-  location.href = u.toString();
-}
+import { registerTr } from "./lang";
+export { getLang, setLang, isRtl, tx } from "./lang";
 
 const EXACT = new Map<string, string>(Object.entries({ ...UI, ...PAGES }));
 const cache = new Map<string, string | null>();
@@ -42,3 +24,4 @@ export function tr(en: string): string {
 }
 
 setLookup(tr);
+registerTr(tr);

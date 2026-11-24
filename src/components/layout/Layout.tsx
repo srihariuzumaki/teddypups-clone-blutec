@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { useRevealScope } from "../../lib/useRevealScope";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Header from "./Header";
@@ -10,6 +10,7 @@ import { attachBuddies } from "../../lib/mascot/buddies";
 import { attachFlights } from "../../lib/flights";
 import RouteCurtain from "./RouteCurtain";
 import SmoothScroll from "../../lib/SmoothScroll";
+import { prefetchRoutes } from "../../routes";
 
 /** Scroll to top on route change, or to the #hash target. */
 function useScrollRestoration() {
@@ -56,6 +57,15 @@ export default function Layout() {
   // Bring every Teddy on the page to life (blink, wag, tricks on click); the walking mascot takes over the stops.
   useEffect(() => attachBuddies(document), [pathname]);
   useEffect(() => attachFlights(document), [pathname]);
+  // Fetch the other routes' chunks once the first screen is done (or as soon as the pointer/focus heads for a link).
+  useEffect(() => {
+    const idle = (window as any).requestIdleCallback ?? ((f: () => void) => setTimeout(f, 1200));
+    const t = idle(prefetchRoutes, { timeout: 4000 });
+    const eager = () => { prefetchRoutes(); removeEventListener("pointerover", eager); removeEventListener("focusin", eager); };
+    addEventListener("pointerover", eager, { once: true });
+    addEventListener("focusin", eager, { once: true });
+    return () => { (window as any).cancelIdleCallback?.(t); removeEventListener("pointerover", eager); removeEventListener("focusin", eager); };
+  }, []);
   return (
     <div className="relative">
       <RouteCurtain />
@@ -63,7 +73,9 @@ export default function Layout() {
       <a href="#main" className="sr-only-focusable fixed left-4 top-4 z-[100] rounded-full">Skip to content</a>
       <Header />
       <main ref={mainRef} id="main" tabIndex={-1} className="relative pt-[var(--header-h)] outline-none">
-        <Outlet />
+        <Suspense fallback={null}>
+          <Outlet />
+        </Suspense>
         <PupJourney routeKey={pathname} />
       </main>
       <PawPrints />
