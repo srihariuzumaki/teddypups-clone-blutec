@@ -36,8 +36,7 @@ npm run preview    # serve the production build
 Photos and videos are already committed under `public/`. `npm run assets` re-downloads them and `npm run data`
 rebuilds `src/data/puppies.json` from `data/`; you don't need either to run the app.
 
-**Contact form:** it is mocked by default. Set `VITE_FORM_ENDPOINT` (Formspree, Web3Forms or any JSON endpoint) in
-`.env.local` or in the Vercel project settings to send real enquiries.
+**Contact form:** mocked unless a key is set. Set `VITE_WEB3FORMS_KEY` (a public Web3Forms access key, enquiries are emailed to the owner) or `VITE_FORM_ENDPOINT` (Formspree or any JSON endpoint) in `.env.local` or in the Vercel project settings. Submissions pass through that third-party service.
 
 ## CI
 [.github/workflows/ci.yml](.github/workflows/ci.yml) runs on every push to `main` and every pull request:

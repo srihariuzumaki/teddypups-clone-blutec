@@ -1,9 +1,10 @@
 /**
- * Sends an enquiry. If VITE_FORM_ENDPOINT is set (Formspree / Web3Forms / any JSON endpoint) the data is POSTed
+ * Sends an enquiry. If VITE_WEB3FORMS_KEY (Web3Forms) or VITE_FORM_ENDPOINT (Formspree / any JSON endpoint) is set the data is POSTed
  * there; otherwise it is a mock that resolves after a short delay (the original posts to its own backend).
  */
 export async function submitEnquiry(data: Record<string, string>): Promise<void> {
-  const url = import.meta.env.VITE_FORM_ENDPOINT as string | undefined;
+  const key = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined; // Web3Forms access keys are public by design
+  const url = (import.meta.env.VITE_FORM_ENDPOINT as string | undefined) || (key ? "https://api.web3forms.com/submit" : undefined);
   if (!url) {
     await new Promise((r) => setTimeout(r, 450));
     return;
@@ -11,7 +12,11 @@ export async function submitEnquiry(data: Record<string, string>): Promise<void>
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({ ...data, _subject: "TeddyPups enquiry" }),
+    body: JSON.stringify(
+      key
+        ? { ...data, access_key: key, subject: "TeddyPups enquiry", from_name: "TeddyPups website" }
+        : { ...data, _subject: "TeddyPups enquiry" },
+    ),
   });
   if (!res.ok) throw new Error("Could not send your letter. Please try WhatsApp instead.");
 }
