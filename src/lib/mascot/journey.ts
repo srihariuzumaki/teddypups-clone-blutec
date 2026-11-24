@@ -22,7 +22,7 @@ type Track =
 interface Stop { x: number; track: Track; s: number; behind: boolean; sink: number; box: Box }
 interface Meta { scene: HTMLElement | null; pose: PoseName; facing: number; act: string; looks: HTMLElement[]; track: HTMLElement | null }
 interface Safe { left: number; top: number; right: number; bottom: number }
-interface Model { lane: boolean; stops: Stop[]; meta: Meta[]; holds: [number, number][]; blend: number; mainTop: number }
+interface Model { docH: number; lane: boolean; stops: Stop[]; meta: Meta[]; holds: [number, number][]; blend: number; mainTop: number }
 interface Placed { x: number; y: number; s: number; front: boolean; airborne: boolean; k: number; t: number; walked: number }
 
 const ANCHOR = { x: 150, y: 228 }; // the point of Teddy that sits on the stop (between his paws)
@@ -155,6 +155,12 @@ function resolveHolds(ranges: [number, number][], minGap: number[], maxScroll: n
       if (need > 0) a[1] -= Math.min(need, a[1] - a[0]);
     }
   }
+  // The minimum-walk spacing can push the last hold past the end of the page (a short footer); he must still arrive.
+  const end = n[n.length - 1], before = n[n.length - 2];
+  if (end[0] > maxScroll - 1) {
+    end[0] = maxScroll - 1;
+    if (before) { before[1] = Math.min(before[1], end[0]); before[0] = Math.min(before[0], before[1]); }
+  }
   for (const r of n) if (r[1] < r[0]) r[1] = r[0];
   return n;
 }
@@ -265,6 +271,7 @@ function measure(probe: HTMLElement): Model {
     return Math.min(1.4 * vh, Math.max(floor, 1.15 * Math.hypot(dx, vertical)));
   });
   return {
+    docH: document.documentElement.scrollHeight,
     lane: mobile,
     stops,
     meta,
@@ -467,6 +474,8 @@ export function startJourney(els: JourneyEls): () => void {
     const now = clock();
     const dt = Math.min(0.05, now - lastT);
     lastT = now;
+    // Layout can settle after the last resize event (late fonts, translated text): the hold ranges would then point past the page end.
+    if (!remeasureTimer && Math.abs(document.documentElement.scrollHeight - m.docH) > 2) remeasure();
     const sc = scrollY;
     const dScroll = sc - lastScroll;
     lastScroll = sc;
@@ -706,6 +715,7 @@ export function startJourney(els: JourneyEls): () => void {
   const remeasure = () => {
     clearTimeout(remeasureTimer);
     remeasureTimer = window.setTimeout(() => {
+      remeasureTimer = 0;
       if (!running || !model) return;
       const next = measure(probe);
       if (next.stops.length < 2) return end();
