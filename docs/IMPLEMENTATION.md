@@ -137,6 +137,21 @@ Everything was ported from the reference's un-minified JS (same numbers), then v
 - **How it works.** The original sets `data-ready` on `.tp-journeys` after mount, which turns on the step cards' pop-in
   (`tp-step-in`, staggered by `--i`); the postcard plane's bob is CSS. Both now work, including after switching tabs.
 
+## 9. Hero lineup: puppies that duck, swap and pop with a name bubble
+
+`src/pages/home/HeroLineup.tsx` (ported from the original's `HeroLineup`). The hero shows 6 seats of puppies over the quilt; the
+showroom has 15 available puppies, so the rest rotate in.
+- After the entrance animation (`tp-peek`) finishes, a loop picks a random visible seat (never the same one twice in a row),
+  sets `data-state="duck"` (CSS slides the photo down, 340 ms), then at 360 ms swaps in the next puppy from a shuffled queue
+  (sending the old one to the back), sets `data-state="pop"` (CSS `tp-pop-up`) and shows that seat's name bubble for 1.8 s.
+  The gap to the next one cycles through 1.9/2.5/1.7/2.3/2.0/2.8/1.8 s so it doesn't feel metronomic.
+- It only acts when the tab is visible, the hero is at least 35 % on screen, you haven't scrolled/clicked/hovered in the last
+  1.2 s, and the hero is the scene Teddy is at (`data-here`). The *next* photo is kept in a hidden "wings" element and
+  `decode()`d first, so a swapped-in puppy never pops up half-loaded (it waits up to 6 s, then skips that puppy).
+- Hover/focus on a puppy shows its bubble too (a second "tags" list sits above the photos so bubbles are never clipped).
+- Reduced motion: static six, no loop. Static render still matches the original (0.1 % diff); a 16 s behaviour log of both
+  sites shows the same sequence of duck, swap, pop, bubble.
+
 ## 5. Problems met and how they were fixed
 
 | # | Problem | Cause | Fix |
@@ -168,7 +183,6 @@ Everything was ported from the reference's un-minified JS (same numbers), then v
 | 22 | Trail "gap too big" / "only 1–2 paws when slow" | Gap 90 px, step 78 px | Tuned to gap 20, step 38, pool 16 and checked with scripted slow/medium mouse paths. |
 
 ## 6. Known gaps (honest list)
-- The hero lineup duck-and-pop is not built.
 - `/happy-families` is 8.7 % off at 390 px (3 px shorter); not yet traced.
 - Forms are mocked unless a form endpoint is configured.
 - Not yet deployed; not yet pushed to GitHub.

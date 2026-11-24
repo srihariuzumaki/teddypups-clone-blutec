@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { available, gone, findPuppy, type Puppy } from "../data/puppies";
 import extra from "../data/detail-extra.json";
-import focal from "../data/focal.json";
+import { focalStyle, imgAlt } from "../lib/puppyImage";
 import { WA_LINK, waFor } from "../data/site";
 import { submitEnquiry, validateEnquiry, type FieldErrors } from "../lib/submitEnquiry";
 import { usePageMeta } from "../lib/usePageMeta";
@@ -11,10 +11,6 @@ import { PAW_D } from "../components/layout/pawPath";
 import NotFound from "./NotFound";
 
 type Item = { kind: "photo" | "video"; src: string; poster?: string };
-
-const sexWord = (s: Puppy["sex"]) => (s === "boy" ? "male" : s === "girl" ? "female" : "");
-const imgAlt = (p: Puppy) =>
-  p.isNamed ? `${p.name}, ${sexWord(p.sex)} ${p.breed} puppy`.replace(/ {2}/g, " ") : `${sexWord(p.sex) ? sexWord(p.sex)[0].toUpperCase() + sexWord(p.sex).slice(1) + " " : ""}${p.breed} puppy`;
 
 /** Photos first, then videos; a video's poster frame is not repeated as a photo. */
 function itemsOf(p: Puppy): Item[] {
@@ -26,10 +22,7 @@ function itemsOf(p: Puppy): Item[] {
   return [...photos, ...videos];
 }
 
-const fp = (src?: string): React.CSSProperties | undefined => {
-  const pos = src ? (focal as Record<string, string>)[src] : undefined;
-  return pos ? { objectPosition: pos } : undefined;
-};
+const fp = focalStyle;
 
 const TRAIL = [
   ["Reserve your puppy", "Tell us which puppy has captured your heart."],

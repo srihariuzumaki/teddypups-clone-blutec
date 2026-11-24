@@ -122,10 +122,17 @@ Measured result against the live site (1440 px): header/footer/home sections 0â€
 **Outcome:** The reference's "curtain" (loading screen with a running Teddy) on every load and page switch, and the scroll-driven plane on the home page and How it works, plus the missing step-card animation. Checked by logging state timings and plane positions on both sites.
 **My part:** I spotted these two missing pieces by comparing the sites.
 
+### 12. Hero lineup animation
+**Prompt:**
+> also in the home page hero section after the starting animation the photo section of single puppy shpuld animate randomly by showing the text bubble box just like the original one
+> (with a screenshot of the hero)
+
+**Outcome:** Ported the original's lineup logic: after the entrance animation a random puppy ducks, swaps for another showroom puppy, pops back up and shows a name bubble; hover shows it too. Compared a 16 s event log on both sites.
+**My part:** I noticed the missing behaviour and supplied the screenshot as the target.
+
 ---
 
 ## Still to do (as of this log)
-- Hero lineup duck-and-pop.
 - Real form endpoint (currently mocked unless `VITE_FORM_ENDPOINT` is set).
 - GitHub push, Vercel deploy, README, Loom, submission email.
 
