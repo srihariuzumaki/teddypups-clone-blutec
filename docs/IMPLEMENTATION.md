@@ -92,9 +92,9 @@ while the page scrolls, and mouse movement only makes the mascot look at the cur
 because that was requested. When the walking mascot is built, the same print pool can be fed from its steps.
 
 **Mascot trail (built):** the cursor trail is kept *and* the walking mascot now lays prints like the original: one per
-34 stride-units walked, alternating left/right foot, rotated to his heading, from a pool of 24 (see section 7).
+34 stride-units walked, alternating left/right foot, rotated to his heading, from a pool of 24 (see section 5).
 
-## 7. The mascot "Teddy" (SVG rig + walking journey)
+## 5. The mascot "Teddy" (SVG rig + walking journey)
 
 Files: `src/lib/mascot/{rig,buddies,journey,loop}.ts`, `src/components/ui/TeddySvg.tsx`, `src/components/layout/PupJourney.tsx`.
 Everything was ported from the reference's un-minified JS (same numbers), then verified against the live site.
@@ -121,7 +121,7 @@ Everything was ported from the reference's un-minified JS (same numbers), then v
   order at 9 scroll offsets on both sites: **all 9 match exactly at 1440 px and at 390 px**, page heights equal, and the
   number of simultaneous paw prints is 19 on both.
 
-## 8. Loading curtain and the flight plane
+## 6. Loading curtain and the flight plane
 
 - **Curtain (`RouteCurtain.tsx`, `lib/curtain.ts`).** A scalloped blanket with a running Teddy, portalled to `<body>` (the
   original's CSS expects it there). States: `intro -> idle` on every full load; on an internal link click `covering` (300 ms)
@@ -137,7 +137,7 @@ Everything was ported from the reference's un-minified JS (same numbers), then v
 - **How it works.** The original sets `data-ready` on `.tp-journeys` after mount, which turns on the step cards' pop-in
   (`tp-step-in`, staggered by `--i`); the postcard plane's bob is CSS. Both now work, including after switching tabs.
 
-## 9. Hero lineup: puppies that duck, swap and pop with a name bubble
+## 7. Hero lineup: puppies that duck, swap and pop with a name bubble
 
 `src/pages/home/HeroLineup.tsx` (ported from the original's `HeroLineup`). The hero shows 6 seats of puppies over the quilt; the
 showroom has 15 available puppies, so the rest rotate in.
@@ -152,7 +152,7 @@ showroom has 15 available puppies, so the rest rotate in.
 - Reduced motion: static six, no loop. Static render still matches the original (0.1 % diff); a 16 s behaviour log of both
   sites shows the same sequence of duck, swap, pop, bubble.
 
-## 5. Problems met and how they were fixed
+## 8. Problems met and how they were fixed
 
 | # | Problem | Cause | Fix |
 |---|---|---|---|
@@ -182,8 +182,9 @@ showroom has 15 available puppies, so the rest rotate in.
 | 25 | How-it-works steps didn't animate | `data-ready` flag missing; found by diffing live DOM attributes of both sites | Set it after mount. |
 | 22 | Trail "gap too big" / "only 1–2 paws when slow" | Gap 90 px, step 78 px | Tuned to gap 20, step 38, pool 16 and checked with scripted slow/medium mouse paths. |
 
-## 6. Known gaps (honest list)
+## 9. Known gaps (honest list)
 - `/happy-families` is 8.7 % off at 390 px (3 px shorter); not yet traced.
 - Forms are mocked unless a form endpoint is configured.
-- Not yet deployed; not yet pushed to GitHub.
+- Deployed on Vercel (Deployment Protection must be off for reviewers) and pushed to GitHub.
+- Mascot trail uses its own 24-print pool; the cursor trail has a separate 16-print pool (both are `.pup-prints`).
 - Images, copy and CSS originate from the reference site; they are used here only for this assessment.

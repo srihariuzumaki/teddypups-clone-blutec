@@ -134,10 +134,10 @@ Measured result against the live site (1440 px): header/footer/home sections 0â€
 
 ## Still to do (as of this log)
 - Real form endpoint (currently mocked unless `VITE_FORM_ENDPOINT` is set).
-- GitHub push, Vercel deploy, README, Loom, submission email.
+- README, Loom video, submission email; trace the `/happy-families` mobile mismatch.
 
 ## Things I should be ready to explain in the Loom
 - Why Vite + React instead of the original's Next.js.
 - Why I reused the reference's CSS instead of re-drawing it, and the honest trade-off: the result is near-exact but derived from the reference; images and copy belong to the reference site (note in README).
-- How the pinned horizontal scroll, reveal-on-scroll and chat steps work (see IMPLEMENTATION.md).
+- How the pinned horizontal scroll, reveal-on-scroll and chat steps work (see IMPLEMENTATION.md sections 2 and 5-7).
 - How I verified fidelity (pixel diffs) and what is still not matched.
