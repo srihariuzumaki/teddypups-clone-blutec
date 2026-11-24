@@ -181,10 +181,18 @@ showroom has 15 available puppies, so the rest rotate in.
 | 24 | Puppy page Teddy sat instead of peeking | Default pose used | `pose="peek"` (read from the original DOM). |
 | 25 | How-it-works steps didn't animate | `data-ready` flag missing; found by diffing live DOM attributes of both sites | Set it after mount. |
 | 22 | Trail "gap too big" / "only 1–2 paws when slow" | Gap 90 px, step 78 px | Tuned to gap 20, step 38, pool 16 and checked with scripted slow/medium mouse paths. |
+| 26 | `/happy-families` 3 px shorter than the original at 390 px (8.7 % diff, whole page shifted) | Traced with a script that diffs element tops/heights of both sites: the photo wall was 1.1 px taller/shorter in total. The original serves photos through Next's image optimiser, so each `<img height:auto>` takes the intrinsic ratio of a thumbnail with a *rounded* height (175×233, not an exact 3:4). Our full-size files have exact ratios, and 64 rows of 0.4 px add up | Recorded the original's thumbnail sizes (`src/data/wall-thumbs.json`) and apply them as `aspect-ratio` on phones only. Main height now identical (31040 px), diff 8.7 % → 6.3 %, the rest is image sharpness at photo edges, not layout. Applying it at 768/1440 made those worse, so it is phone-only. |
+| 27 | Contact form emails were plain ("Hello, a new form has been submitted") | Web3Forms' free plan has a fixed template | Moved to EmailJS with my own HTML template (`docs/email/enquiry.html`: cream/cocoa/honey palette, puppy card, WhatsApp and call buttons). Web3Forms stays as the automatic fallback. EmailJS first failed with `Gmail_API: Not found the sessional location`: the Gmail service needed to be reconnected with the "send on your behalf" permission. |
+| 28 | Puppy shown as a raw UUID in the email | The select posts the puppy id | Read the selected option's text before sending (`data.puppy`); empty fields become "Not given". |
+
+## 8b. CI and the contact email
+- **CI** (`.github/workflows/ci.yml`): on every push to `main` and every PR, GitHub installs with `npm ci`, runs `npm run build` (type-check + production build), checks `dist/index.html` exists and uploads `dist`. It catches errors that only show on a clean machine. The visual QA needs Chromium and the live reference, so it stays a local tool.
+- **Contact email**: `submitEnquiry.ts` tries EmailJS (REST call from the browser, our HTML template) and falls back to Web3Forms. All keys are public by design and only allow sending to the owner's registered address; restrict allowed domains in their dashboards.
 
 ## 9. Known gaps (honest list)
-- `/happy-families` is 8.7 % off at 390 px (3 px shorter); not yet traced.
-- Forms are mocked unless a form endpoint is configured.
+- `/happy-families` at 390 px: layout now matches (height Δ 1 px); 6.3 % remains from image sharpness (we show full-size photos, the original shows blurred 175 px thumbnails). At 768 px the page is 26 px shorter (not traced).
+- Wall photos are the full-size originals (some 3120×4160): fine for fidelity, heavy for Lighthouse; resizing/srcset is a planned optimisation.
+- The contact form is mocked unless EmailJS / Web3Forms variables are set; the live site has them (EmailJS themed email, Web3Forms fallback).
 - Deployed on Vercel (Deployment Protection must be off for reviewers) and pushed to GitHub.
 - Mascot trail uses its own 24-print pool; the cursor trail has a separate 16-print pool (both are `.pup-prints`).
 - Images, copy and CSS originate from the reference site; they are used here only for this assessment.

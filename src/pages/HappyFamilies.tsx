@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePageMeta } from "../lib/usePageMeta";
+import THUMBS_RAW from "../data/wall-thumbs.json";
 import HappyFamiliesMarkup from "./markup/HappyFamiliesMarkup";
 
+const THUMBS = THUMBS_RAW as [number, number][][];
 const ALT = "A happy TeddyPups family with their new puppy";
 
 /** Photo wall + full-screen viewer (native <dialog>, arrows/Escape/swipe). */
@@ -15,6 +17,24 @@ export default function HappyFamilies() {
 
   useEffect(() => {
     setPhotos([...wrap.current!.querySelectorAll<HTMLImageElement>(".tp-wall__print img")].map((i) => i.getAttribute("src") || ""));
+  }, []);
+
+  // The original serves each wall photo through Next's image optimiser, so the browser's intrinsic ratio is that of a
+  // resized thumbnail whose height was rounded to whole pixels (e.g. 175x233, not an exact 3:4). Over 64 photos that
+  // drifts ~3px at 390px. We serve the full-size files, so apply the thumbnail ratios recorded from the original
+  // (src/data/wall-thumbs.json: per photo, the thumbnail size at 390 / 768 / 1440px wide; only the phone size is needed).
+  useEffect(() => {
+    const fit = () => {
+      const phone = innerWidth < 768; // tablet/desktop already match without it
+      wrap.current?.querySelectorAll<HTMLImageElement>(".tp-wall__print img").forEach((img, i) => {
+        const d = THUMBS[i]?.[0];
+        if (phone && d) img.style.aspectRatio = `${d[0]} / ${d[1]}`;
+        else img.style.removeProperty("aspect-ratio");
+      });
+    };
+    fit();
+    addEventListener("resize", fit);
+    return () => removeEventListener("resize", fit);
   }, []);
 
   const go = useCallback((d: number) => setAt((a) => (a + d + photos.length) % photos.length), [photos.length]);

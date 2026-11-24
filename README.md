@@ -22,7 +22,7 @@ made for the Blutec.AI technical assignment.
 ## Fidelity
 Each page was captured from the original and from this app with Playwright and pixel-diffed (`scripts/qa/qa.mjs`).
 At 1440 px the home sections differ by 0–0.1 %, inner pages by 0.03–0.5 %, puppy pages by 0.1–0.3 %, with identical page
-heights. Known gap: `/happy-families` at 390 px is 8.7 % off (3 px taller). Details are in
+heights. Known gap: `/happy-families` at 390 px is 6.3 % off (layout matches; the rest is image sharpness) and 26 px shorter at 768 px. Details are in
 [docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md#9-known-gaps-honest-list).
 
 ## Run it

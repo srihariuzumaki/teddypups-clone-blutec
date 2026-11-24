@@ -17,7 +17,7 @@ const flag = (n, d) => { const i = args.indexOf(`--${n}`); return i < 0 ? d : ar
 const pagePath = args[0]?.startsWith("--") ? "/" : args[0] || "/";
 const VW = +flag("vw", 1440), VH = +flag("vh", 900);
 const ORIG = process.env.ORIG_URL || "https://puppy.instabizweb.com";
-const OURS = process.env.OURS_URL || "http://127.0.0.1:5173";
+const OURS = process.env.OURS_URL || "http://localhost:5173";
 const motion = flag("motion", false) ? "no-preference" : "reduce";
 const slug = pagePath === "/" ? "home" : pagePath.replace(/^\/|\/$/g, "").replace(/[/?=&]/g, "_");
 const root = join("qa-out", slug, String(VW));

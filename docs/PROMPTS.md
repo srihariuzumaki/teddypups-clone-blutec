@@ -18,7 +18,8 @@ produced; the "My part" lines are the things I decided, checked or corrected mys
 | curl, jq, python, node scripts | Downloading the reference HTML/CSS/JS, analysing CSS rules and the JS bundles |
 | Prettier (npx) | Un-minifying the reference JS so the scroll/reveal/mascot logic is readable |
 | Vite, React 18, TypeScript, Tailwind v4, React Router, Lenis | The app itself |
-| (to add at the end) GitHub, Vercel, Loom, Lighthouse | Delivery |
+| GitHub + GitHub Actions, Vercel, EmailJS, Web3Forms | Delivery, CI, contact email |
+| (to add) Loom, Lighthouse | Submission |
 
 ## Log (oldest first)
 
@@ -130,14 +131,37 @@ Measured result against the live site (1440 px): header/footer/home sections 0â€
 **Outcome:** Ported the original's lineup logic: after the entrance animation a random puppy ducks, swaps for another showroom puppy, pops back up and shows a name bubble; hover shows it too. Compared a 16 s event log on both sites.
 **My part:** I noticed the missing behaviour and supplied the screenshot as the target.
 
+### 13. README, CI and the real contact form
+**Prompts:**
+> ok now we completly cloned in one to one but i dont want to stop here since this is an assessment for the role i want to stand out from other what can i do more
+
+> we will firstt do the ci one
+
+> yes updsate the readme and push it and tell me about the ci that we setup and how do i run those or should i even run those ? if so when ?
+
+> will the data from the form will come to my mail ? if i setup the form endpoint orhw thaworks?
+
+> i got the mail but it is very bland i want ta custom one exactly matcching the sites theme
+
+> cant we just show a html file in the mail ?
+
+> yes write the html file then we can setup the emailjs
+
+> what is code splitting
+
+> do the docs one then fix the mobile mismathc
+
+**Outcome:** Claude proposed extras ranked by value; I picked CI first. GitHub Actions workflow (install, type-check, build), a full README rewrite, Web3Forms wired up (my access key), then a themed HTML email through EmailJS with Web3Forms as fallback (puppy name instead of id, empty fields hidden). Traced and fixed the `/happy-families` 390 px height mismatch (rounded thumbnail ratios in the original).
+**My part:** I chose the priorities (CI, then email, code splitting deferred), created the Web3Forms and EmailJS accounts, supplied the keys and fixed the Gmail connection when EmailJS returned 412. I judged the plain email "bland" and asked for the site theme. Keys are public-by-design values, never secrets.
+
 ---
 
 ## Still to do (as of this log)
-- Real form endpoint (currently mocked unless `VITE_FORM_ENDPOINT` is set).
-- README, Loom video, submission email; trace the `/happy-families` mobile mismatch.
+- Loom video and the submission email.
+- Code splitting + Lighthouse pass (resize the large wall photos too); `/happy-families` at 768 px is 26 px shorter.
 
 ## Things I should be ready to explain in the Loom
 - Why Vite + React instead of the original's Next.js.
 - Why I reused the reference's CSS instead of re-drawing it, and the honest trade-off: the result is near-exact but derived from the reference; images and copy belong to the reference site (note in README).
-- How the pinned horizontal scroll, reveal-on-scroll and chat steps work (see IMPLEMENTATION.md sections 2 and 5-7).
+- How the pinned horizontal scroll, reveal-on-scroll and chat steps work (see IMPLEMENTATION.md sections 2 and 5-7; CI and email in 8b).
 - How I verified fidelity (pixel diffs) and what is still not matched.
